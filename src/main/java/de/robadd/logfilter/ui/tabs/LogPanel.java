@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.ByteArrayInputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.SequenceInputStream;
@@ -33,6 +32,7 @@ import de.robadd.logfilter.model.EventFilter;
 import de.robadd.logfilter.model.Index;
 import de.robadd.logfilter.model.LogHandler;
 import de.robadd.logfilter.ui.MainWindow;
+import de.robadd.logfilter.ui.MonitoredInputStream;
 import de.robadd.logfilter.ui.filter.FilterPanel;
 
 public abstract class LogPanel extends JPanel
@@ -159,6 +159,18 @@ public abstract class LogPanel extends JPanel
 			@Override
 			public void actionPerformed(final ActionEvent e)
 			{
+				getSavingThread().start();
+			}
+		};
+	}
+
+	private Thread getSavingThread()
+	{
+		return new Thread()
+		{
+			@Override
+			public void run()
+			{
 				JFileChooser fileChooser = new JFileChooser();
 				fileChooser.setCurrentDirectory(new File("C:\\programming\\eclipse2"));
 				int result = fileChooser.showSaveDialog(save);
@@ -172,8 +184,8 @@ public abstract class LogPanel extends JPanel
 						SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
 						final InputStream wellFormedXml = new SequenceInputStream(Collections.enumeration(Arrays.asList(
 							new InputStream[]
-						{ new ByteArrayInputStream("<dummy>".getBytes()), new FileInputStream(logHandler.getInputFile()),
-								new ByteArrayInputStream("</dummy>".getBytes()), })));
+						{ new ByteArrayInputStream("<dummy>".getBytes()), new MonitoredInputStream(logHandler.getInputFile(),
+								parent.getProgressBar()), new ByteArrayInputStream("</dummy>".getBytes()), })));
 						parser.parse(wellFormedXml, logHandler);
 						parent.setStatus(MessageFormat.format("Writing finished {0} elements of {1} written", logHandler
 								.getHandledEventCount(), logHandler.getTotalEventCount()));
@@ -189,7 +201,7 @@ public abstract class LogPanel extends JPanel
 
 	private Thread getLoadingThread()
 	{
-		Thread t = new Thread(new Runnable()
+		return new Thread(new Runnable()
 		{
 			@Override
 			public void run()
@@ -202,8 +214,8 @@ public abstract class LogPanel extends JPanel
 					SAXParser parser = SAXParserFactory.newInstance().newSAXParser();
 					final InputStream wellFormedXml = new SequenceInputStream(Collections.enumeration(Arrays.asList(
 						new InputStream[]
-					{ new ByteArrayInputStream("<dummy>".getBytes()), new FileInputStream(logHandler.getInputFile()),
-							new ByteArrayInputStream("</dummy>".getBytes()), })));
+					{ new ByteArrayInputStream("<dummy>".getBytes()), new MonitoredInputStream(logHandler.getInputFile(),
+							parent.getProgressBar()), new ByteArrayInputStream("</dummy>".getBytes()), })));
 					parser.parse(wellFormedXml, logHandler);
 					updateFilterPanels(logHandler.getIndex());
 					parent.setStatus("Loading finished. Read " + logHandler.getTotalEventCount() + " elements.");
@@ -214,7 +226,6 @@ public abstract class LogPanel extends JPanel
 				}
 			}
 		});
-		return t;
 	}
 
 	protected abstract LogConfiguration getLogConfiguration();
@@ -237,7 +248,7 @@ public abstract class LogPanel extends JPanel
 	public abstract int priority();
 
 	/**
-	 * Overwrite this method to return true if its fully implemented abd should be
+	 * Overwrite this method to return true if its fully implemented and should be
 	 * shown
 	 *
 	 * @return if implemented

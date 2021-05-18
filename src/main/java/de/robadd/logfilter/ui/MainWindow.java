@@ -46,6 +46,7 @@ public class MainWindow
 	/**
 	 * Initialize the contents of the frame.
 	 */
+	@SuppressWarnings("resource")
 	private void initialize()
 	{
 		frame = new JFrame();
@@ -72,7 +73,7 @@ public class MainWindow
 		panel.add(status, "2, 2, left, top");
 
 		progressBar = new JProgressBar();
-		panel.add(progressBar, "4, 2, left, top");
+		panel.add(getProgressBar(), "4, 2, left, top");
 	}
 
 	private void addPanels(final JTabbedPane tabbedPane)
@@ -159,17 +160,22 @@ public class MainWindow
 
 	public void setProgressBarMaximum(final Integer max)
 	{
-		progressBar.setMaximum(max);
+		getProgressBar().setMaximum(max);
 	}
 
 	public void setProgress(final Integer val)
 	{
-		progressBar.setValue(val);
+		getProgressBar().setValue(val);
 	}
 
 	public void resetProgressBar()
 	{
-		progressBar.setMaximum(1);
-		progressBar.setValue(0);
+		getProgressBar().setMaximum(1);
+		getProgressBar().setValue(0);
+	}
+
+	public JProgressBar getProgressBar()
+	{
+		return progressBar;
 	}
 }
