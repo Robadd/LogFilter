@@ -3,6 +3,8 @@ package de.robadd.logfilter.logtypes.ebay;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
+
 import de.robadd.logfilter.model.Message;
 
 public class EbayMessage implements Message
@@ -13,7 +15,7 @@ public class EbayMessage implements Message
 	@Override
 	public void character(final String str)
 	{
-		if (!str.isBlank())
+		if (!StringUtils.isBlank(str))
 		{
 			msg = str;
 			Pattern pattern = Pattern.compile("([a-zA-Z]*)(Request|Response)");
