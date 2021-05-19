@@ -106,7 +106,7 @@ public class LogHandler extends DefaultHandler
 			event.setClazz(attributes.getValue("class"));
 			event.setMethod(attributes.getValue("method"));
 			event.setFile(attributes.getValue("file"));
-			event.setLine(Integer.valueOf(attributes.getValue("line")));
+			event.setLine(Integer.valueOf(attributes.getValue("line").replace(".", "")));
 		}
 		config.fillElement(event, uri, localName, qName, attributes);
 	}

@@ -9,6 +9,8 @@ import javax.swing.JLabel;
 import javax.swing.JSlider;
 import javax.swing.JTextField;
 
+import org.apache.commons.lang3.tuple.Pair;
+
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -16,7 +18,7 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import de.robadd.logfilter.model.Index;
 
-public class DateFilterPanel extends UnimplementedFilterPanel<Calendar>
+public class DateFilterPanel extends UnimplementedFilterPanel<Pair<Calendar, Calendar>>
 {
 
 	private JTextField fromTextField;
@@ -36,13 +38,13 @@ public class DateFilterPanel extends UnimplementedFilterPanel<Calendar>
 	}
 
 	@Override
-	public List<Calendar> getSelectedValues()
+	public List<Pair<Calendar, Calendar>> getSelectedValues()
 	{
 		return new ArrayList<>();
 	}
 
 	@Override
-	public void setValues(final List<Calendar> values)
+	public void setValues(final List<Pair<Calendar, Calendar>> values)
 	{
 		// Do nothing
 	}
@@ -88,8 +90,14 @@ public class DateFilterPanel extends UnimplementedFilterPanel<Calendar>
 	@Override
 	public Method getEventMethod(final Class<?> clazz)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		try
+		{
+			return clazz.getMethod("getTimestamp");
+		}
+		catch (NoSuchMethodException | SecurityException e)
+		{
+			return null;
+		}
 	}
 
 	@Override
