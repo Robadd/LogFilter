@@ -27,7 +27,7 @@ public abstract class UnimplementedFilterPanel<T> extends FilterPanel<T>
 	}
 
 	@Override
-	public Method getEventMethod()
+	public Method getEventMethod(final Class<?> clazz)
 	{
 		return null;
 	}

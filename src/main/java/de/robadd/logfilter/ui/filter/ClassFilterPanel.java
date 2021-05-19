@@ -25,7 +25,6 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
-import de.robadd.logfilter.model.Event;
 import de.robadd.logfilter.model.Index;
 
 public class ClassFilterPanel extends FilterPanel<String>
@@ -207,11 +206,11 @@ public class ClassFilterPanel extends FilterPanel<String>
 	}
 
 	@Override
-	public Method getEventMethod()
+	public Method getEventMethod(final Class<?> clazz)
 	{
 		try
 		{
-			return Event.class.getMethod("getClazz");
+			return clazz.getMethod("getClazz");
 		}
 		catch (NoSuchMethodException | SecurityException e)
 		{

@@ -45,7 +45,7 @@ public class EbayLogPanel extends LogPanel
 	}
 
 	@Override
-	protected LogConfiguration getLogConfiguration()
+	public LogConfiguration getLogConfiguration()
 	{
 		return new EbayLogConfiguration();
 	}

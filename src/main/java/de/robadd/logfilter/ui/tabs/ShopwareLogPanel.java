@@ -45,7 +45,7 @@ public class ShopwareLogPanel extends LogPanel
 	}
 
 	@Override
-	protected LogConfiguration getLogConfiguration()
+	public LogConfiguration getLogConfiguration()
 	{
 		return new ShopwareLogConfiguration();
 	}

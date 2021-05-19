@@ -65,7 +65,7 @@ public class ServerLogPanel extends LogPanel
 	}
 
 	@Override
-	protected LogConfiguration getLogConfiguration()
+	public LogConfiguration getLogConfiguration()
 	{
 		return new ServerLogConfiguration();
 	}

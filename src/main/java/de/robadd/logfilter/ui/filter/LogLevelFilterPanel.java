@@ -10,7 +10,6 @@ import javax.swing.AbstractListModel;
 import javax.swing.JList;
 import javax.swing.UIManager;
 
-import de.robadd.logfilter.model.Event;
 import de.robadd.logfilter.model.Index;
 import de.robadd.logfilter.model.LogLevel;
 
@@ -74,11 +73,11 @@ public class LogLevelFilterPanel extends FilterPanel<LogLevel>
 	}
 
 	@Override
-	public Method getEventMethod()
+	public Method getEventMethod(final Class<?> clazz)
 	{
 		try
 		{
-			return Event.class.getMethod("getLevel");
+			return clazz.getMethod("getLevel");
 		}
 		catch (NoSuchMethodException | SecurityException e)
 		{

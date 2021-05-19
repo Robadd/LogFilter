@@ -86,7 +86,7 @@ public class DateFilterPanel extends UnimplementedFilterPanel<Calendar>
 	}
 
 	@Override
-	public Method getEventMethod()
+	public Method getEventMethod(final Class<?> clazz)
 	{
 		// TODO Auto-generated method stub
 		return null;

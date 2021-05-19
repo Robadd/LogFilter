@@ -1,5 +1,6 @@
 package de.robadd.logfilter.model;
 
+import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -172,11 +173,6 @@ public class Event
 		}
 	}
 
-	public String getRequestMethod()
-	{
-		return "";
-	}
-
 	public String getXML()
 	{
 		return MessageFormat.format(
@@ -184,5 +180,10 @@ public class Event
 					+ "\r\n<locationInfo class=\"{5}\" method=\"{6}\" file=\"{7}\" line=\"{8}\"/>\r\n</event>", getLogger(),
 			DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm:ss", Locale.GERMAN).format(getTimestamp()), getLevel(),
 			getThread(), getMessage().toString().trim(), getClazz(), getMethod(), getFile(), getLine());
+	}
+
+	public Method getCustomMethod(final String methodName)
+	{
+		return null;
 	}
 }

@@ -228,7 +228,7 @@ public abstract class LogPanel extends JPanel
 		});
 	}
 
-	protected abstract LogConfiguration getLogConfiguration();
+	public abstract LogConfiguration getLogConfiguration();
 
 	protected void updateFilterPanels(final Index index)
 	{

@@ -40,7 +40,7 @@ public class HitmeisterLogPanel extends LogPanel
 	}
 
 	@Override
-	protected LogConfiguration getLogConfiguration()
+	public LogConfiguration getLogConfiguration()
 	{
 		return new HitmeisterLogConfiguration();
 	}

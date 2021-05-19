@@ -1,5 +1,6 @@
 package de.robadd.logfilter.ui.filter;
 
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -17,7 +18,6 @@ import com.jgoodies.forms.layout.RowSpec;
 
 import de.robadd.logfilter.logtypes.ebay.EbayLogIndex;
 import de.robadd.logfilter.logtypes.shopware.ShopwareLogIndex;
-import de.robadd.logfilter.model.Event;
 import de.robadd.logfilter.model.Index;
 
 public class CallTypeFilterPanel extends FilterPanel<String>
@@ -123,15 +123,17 @@ public class CallTypeFilterPanel extends FilterPanel<String>
 	}
 
 	@Override
-	public Method getEventMethod()
+	public Method getEventMethod(final Class<?> clazz)
 	{
 		try
 		{
-			return Event.class.getMethod("getRequestMethod");
+			Method methodGetter = clazz.getDeclaredMethod("getCustomMethod", String.class);
+			Object object = clazz.getDeclaredConstructor().newInstance();
+			return (Method) methodGetter.invoke(object, "getRequestMethod");
 		}
-		catch (NoSuchMethodException | SecurityException e)
+		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+				| SecurityException | InstantiationException e)
 		{
-			e.printStackTrace();
 			return null;
 		}
 	}
