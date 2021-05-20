@@ -115,6 +115,7 @@ public class LogHandler extends DefaultHandler
                 e.printStackTrace();
             }
         }
+
         config.fillElement(event, uri, localName, qName, attributes);
     }
 
@@ -124,6 +125,10 @@ public class LogHandler extends DefaultHandler
         if (isMessageElement() && event != null)
         {
             event.messageCharacter(ch, start, length);
+        }
+        else if ("throwable".equals(elementName) && length > 1 && event != null)
+        {
+            event.setThrowable(new String(ch, start, length));
         }
     }
 
@@ -168,6 +173,7 @@ public class LogHandler extends DefaultHandler
             try
             {
                 bw.flush();
+                bw.close();
             }
             catch (IOException e)
             {
