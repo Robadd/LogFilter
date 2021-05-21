@@ -76,8 +76,7 @@ public class LogHandler extends DefaultHandler
         {
             try
             {
-                FileWriter fw = new FileWriter(outputFile);
-                bw = new BufferedWriter(fw);
+                bw = new BufferedWriter(new FileWriter(outputFile));
             }
             catch (IOException e)
             {

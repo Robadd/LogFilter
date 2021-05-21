@@ -13,42 +13,35 @@ import de.robadd.logfilter.ui.filter.FilterPanel;
 public class HitmeisterLogPanel extends LogPanel
 {
 
-	private static final long serialVersionUID = 7958264456145334945L;
+    private static final long serialVersionUID = 7958264456145334945L;
 
-	public HitmeisterLogPanel()
-	{
-		super();
-		this.setEnabled(false);
-	}
+    public HitmeisterLogPanel()
+    {
+        super();
+        this.setEnabled(false);
+    }
 
-	@Override
-	public String getTitle()
-	{
-		return "Kaufland";
-	}
+    @Override
+    public String getTitle()
+    {
+        return "Kaufland";
+    }
 
-	@Override
-	public Icon getIcon()
-	{
-		return new ImageIcon(ClassLoader.getSystemResource("icons/hitmeister.png"));
-	}
+    @Override
+    public Icon getIcon()
+    {
+        return new ImageIcon(ClassLoader.getSystemResource("icons/hitmeister.png"));
+    }
 
-	@Override
-	protected Collection<FilterPanel<?>> getFilterPanels()
-	{
-		return new ArrayList<>();
-	}
+    @Override
+    protected Collection<FilterPanel<?>> getFilterPanels()
+    {
+        return new ArrayList<>();
+    }
 
-	@Override
-	public LogConfiguration getLogConfiguration()
-	{
-		return new HitmeisterLogConfiguration();
-	}
-
-	@Override
-	public int priority()
-	{
-		return 300;
-	}
-
+    @Override
+    public LogConfiguration getLogConfiguration()
+    {
+        return new HitmeisterLogConfiguration();
+    }
 }

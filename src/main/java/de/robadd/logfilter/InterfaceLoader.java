@@ -1,48 +1,64 @@
 package de.robadd.logfilter;
 
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import com.google.common.collect.ImmutableSet;
-import com.google.common.reflect.ClassPath;
-import com.google.common.reflect.ClassPath.ClassInfo;
-
+import de.robadd.logfilter.ui.tabs.EbayLogPanel;
+import de.robadd.logfilter.ui.tabs.HitmeisterLogPanel;
 import de.robadd.logfilter.ui.tabs.LogPanel;
+import de.robadd.logfilter.ui.tabs.MagentoLogPanel;
+import de.robadd.logfilter.ui.tabs.ServerLogPanel;
+import de.robadd.logfilter.ui.tabs.ShopwareLogPanel;
 
 public class InterfaceLoader
 {
+    /**
+     * InterfaceLoader
+     */
+    private InterfaceLoader()
+    {
+    }
 
-	public static List<LogPanel> getLogPanels()
-	{
-		List<LogPanel> retVal = new ArrayList<>();
+    private enum LogPanels
+    {
+        SERVERLOG(ServerLogPanel.class),
+        EBAY(EbayLogPanel.class),
+        HITMEISTER(HitmeisterLogPanel.class),
+        MAGENTO(MagentoLogPanel.class),
+        SHOPWARE(ShopwareLogPanel.class);
 
-		final ClassLoader loader = ClassLoader.getSystemClassLoader();
-		try
-		{
-			final ImmutableSet<ClassInfo> allClasses = ClassPath.from(loader).getAllClasses();
-			final List<ClassInfo> packageFilteredClasses = allClasses.stream().filter(a -> a.getName().startsWith(
-				"de.robadd.logfilter.ui.tabs")).collect(Collectors.toList());
-			for (ClassInfo classInfo : packageFilteredClasses)
-			{
-				if (Arrays.asList(classInfo.load().getSuperclass()).stream().anyMatch(a -> a != null && a.getName().equals(
-					LogPanel.class.getName())))
-				{
-					Class<?> clazz = classInfo.load();
-					LogPanel newInstance = (LogPanel) clazz.getDeclaredConstructor().newInstance();
-					retVal.add(newInstance);
-				}
-			}
+        private Class<? extends LogPanel> clazz;
 
-		}
-		catch (IOException | InstantiationException | IllegalAccessException | IllegalArgumentException
-				| InvocationTargetException | NoSuchMethodException | SecurityException e)
-		{
-			e.printStackTrace();
-		}
-		return retVal;
-	}
+        /**
+         * LogPanels
+         *
+         * @param clazz
+         */
+        private LogPanels(final Class<? extends LogPanel> clazz)
+        {
+            this.clazz = clazz;
+        }
+
+        public LogPanel getPanel()
+        {
+            try
+            {
+                return clazz.getDeclaredConstructor().newInstance();
+            }
+            catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
+                    | SecurityException e)
+            {
+                return null;
+            }
+        }
+    }
+
+    public static List<LogPanel> getLogPanels()
+    {
+        return Arrays.asList(LogPanels.values()).stream()
+                .map(LogPanels::getPanel)
+                .collect(Collectors.toList());
+    }
 }

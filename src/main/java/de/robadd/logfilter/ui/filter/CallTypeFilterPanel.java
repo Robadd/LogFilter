@@ -22,7 +22,8 @@ import de.robadd.logfilter.model.Index;
 
 public class CallTypeFilterPanel extends FilterPanel<String>
 {
-	private static final long serialVersionUID = 7450798551103817546L;
+	private static final String DEFAULT_GROW = "default:grow";
+    private static final long serialVersionUID = 7450798551103817546L;
 	private JList<String> list;
 	private List<String> values = new ArrayList<>();
 
@@ -35,9 +36,9 @@ public class CallTypeFilterPanel extends FilterPanel<String>
 	protected void init()
 	{
 		setLayout(new FormLayout(new ColumnSpec[]
-		{ FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"), }, new RowSpec[]
-		{ FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode("default:grow"), FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode(
-			"default:grow"), }));
+		{ FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode(DEFAULT_GROW), }, new RowSpec[]
+		{ FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode(DEFAULT_GROW), FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode(
+			DEFAULT_GROW), }));
 
 		JScrollPane scrollPane = new JScrollPane();
 		add(scrollPane, "2, 2, fill, fill");

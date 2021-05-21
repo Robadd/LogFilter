@@ -14,51 +14,45 @@ import de.robadd.logfilter.ui.filter.FilterPanel;
 
 public class ShopwareLogPanel extends LogPanel
 {
-	private static final long serialVersionUID = 182081076221645246L;
+    private static final long serialVersionUID = 182081076221645246L;
 
-	public ShopwareLogPanel()
-	{
-		init();
-	}
+    public ShopwareLogPanel()
+    {
+        init();
+    }
 
-	@Override
-	public String getTitle()
-	{
-		return "shopware";
-	}
+    @Override
+    public String getTitle()
+    {
+        return "shopware";
+    }
 
-	@Override
-	public Icon getIcon()
-	{
-		return new ImageIcon(ClassLoader.getSystemResource("icons/shopware.png"));
-	}
+    @Override
+    public Icon getIcon()
+    {
+        return new ImageIcon(ClassLoader.getSystemResource("icons/shopware.png"));
+    }
 
-	@Override
-	protected Collection<FilterPanel<?>> getFilterPanels()
-	{
-		Collection<FilterPanel<?>> retVal = new ArrayList<>();
-		DateFilterPanel dateFilter = new DateFilterPanel();
-		CallTypeFilterPanel callTypeFilterPanel = new CallTypeFilterPanel();
-		retVal.add(dateFilter);
-		retVal.add(callTypeFilterPanel);
-		return retVal;
-	}
+    @Override
+    protected Collection<FilterPanel<?>> getFilterPanels()
+    {
+        Collection<FilterPanel<?>> retVal = new ArrayList<>();
+        DateFilterPanel dateFilter = new DateFilterPanel();
+        CallTypeFilterPanel callTypeFilterPanel = new CallTypeFilterPanel();
+        retVal.add(dateFilter);
+        retVal.add(callTypeFilterPanel);
+        return retVal;
+    }
 
-	@Override
-	public LogConfiguration getLogConfiguration()
-	{
-		return new ShopwareLogConfiguration();
-	}
+    @Override
+    public LogConfiguration getLogConfiguration()
+    {
+        return new ShopwareLogConfiguration();
+    }
 
-	@Override
-	public int priority()
-	{
-		return 400;
-	}
-
-	@Override
-	public boolean isImplemented()
-	{
-		return true;
-	}
+    @Override
+    public boolean isImplemented()
+    {
+        return true;
+    }
 }
