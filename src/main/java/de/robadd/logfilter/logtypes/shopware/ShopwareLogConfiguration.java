@@ -5,7 +5,6 @@ import org.xml.sax.Attributes;
 import de.robadd.logfilter.logtypes.LogConfiguration;
 import de.robadd.logfilter.model.Event;
 import de.robadd.logfilter.model.EventBuilder;
-import de.robadd.logfilter.model.Index;
 import de.robadd.logfilter.model.IndexBuilder;
 import de.robadd.logfilter.ui.tabs.LogPanel;
 import de.robadd.logfilter.ui.tabs.ShopwareLogPanel;
@@ -32,27 +31,13 @@ public class ShopwareLogConfiguration implements LogConfiguration
 	@Override
 	public EventBuilder getEventBuilder()
 	{
-		return new EventBuilder()
-		{
-			@Override
-			public Event build()
-			{
-				return new ShopwareEvent();
-			}
-		};
+		return ShopwareEvent::new;
 	}
 
 	@Override
 	public IndexBuilder getIndexBuilder()
 	{
-		return new IndexBuilder()
-		{
-			@Override
-			public Index build()
-			{
-				return new ShopwareLogIndex();
-			}
-		};
+		return ShopwareLogIndex::new;
 	}
 
 }

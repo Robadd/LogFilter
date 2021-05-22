@@ -1,6 +1,5 @@
 package de.robadd.logfilter.ui.tabs;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -17,62 +16,42 @@ import de.robadd.logfilter.ui.filter.LogLevelFilterPanel;
 
 public class ServerLogPanel extends LogPanel
 {
-    public ServerLogPanel()
-    {
-        init();
-    }
+	public ServerLogPanel()
+	{
+		init();
+	}
 
-    private static final long serialVersionUID = -2161393816161110760L;
-    private LogLevelFilterPanel loglevelFilter;
-    private DateFilterPanel dateFilter;
-    private ClassFilterPanel classFilterPanel;
+	private static final long serialVersionUID = -2161393816161110760L;
 
-    @Override
-    public String getTitle()
-    {
-        return "Serverlog";
-    }
+	@Override
+	public String getTitle()
+	{
+		return "Serverlog";
+	}
 
-    @Override
-    public Icon getIcon()
-    {
-        return new ImageIcon(ClassLoader.getSystemResource("icons/connect.png"));
-    }
+	@Override
+	public Icon getIcon()
+	{
+		return new ImageIcon(ClassLoader.getSystemResource("icons/connect.png"));
+	}
 
-    @Override
-    protected Collection<FilterPanel<?>> getFilterPanels()
-    {
-        Collection<FilterPanel<?>> retVal = new ArrayList<>();
-        dateFilter = new DateFilterPanel();
-        loglevelFilter = new LogLevelFilterPanel();
+	@Override
+	protected Collection<FilterPanel<?>> getFilterPanels()
+	{
+		LogLevelFilterPanel loglevelFilter = new LogLevelFilterPanel();
+		loglevelFilter.setValues(Arrays.asList(LogLevel.values()));
+		return Arrays.asList(loglevelFilter, new DateFilterPanel(), new ClassFilterPanel());
+	}
 
-        loglevelFilter.setValues(Arrays.asList(LogLevel.values()));
-        classFilterPanel = new ClassFilterPanel();
-        retVal.add(dateFilter);
-        retVal.add(loglevelFilter);
-        retVal.add(classFilterPanel);
-        return retVal;
-    }
+	@Override
+	public LogConfiguration getLogConfiguration()
+	{
+		return new ServerLogConfiguration();
+	}
 
-    public Collection<String> getClasses()
-    {
-        return classFilterPanel.getSelectedValues();
-    }
-
-    public Collection<LogLevel> getLogLevels()
-    {
-        return loglevelFilter.getSelectedValues();
-    }
-
-    @Override
-    public LogConfiguration getLogConfiguration()
-    {
-        return new ServerLogConfiguration();
-    }
-
-    @Override
-    public boolean isImplemented()
-    {
-        return true;
-    }
+	@Override
+	public boolean isImplemented()
+	{
+		return true;
+	}
 }

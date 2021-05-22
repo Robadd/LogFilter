@@ -25,170 +25,155 @@ import de.robadd.logfilter.model.Index;
 
 public class ClassFilterPanel extends FilterPanel<String>
 {
-    private static final long serialVersionUID = -4493731056085604192L;
-    private JList<String> list;
-    private List<String> values = new ArrayList<>();
-    private JTextField filteringInputField;
-    private transient Predicate<String> listFilter = input -> input.matches(filteringInputField.getText());
+	private static final long serialVersionUID = -4493731056085604192L;
+	private JList<String> list;
+	private List<String> values = new ArrayList<>();
+	private JTextField filteringInputField;
+	private transient Predicate<String> listFilter = input -> input.matches(filteringInputField.getText());
 
-    public ClassFilterPanel()
-    {
-        super();
-    }
+	public ClassFilterPanel()
+	{
+		super();
+	}
 
-    @Override
-    protected void init()
-    {
-        setLayout(new FormLayout(new ColumnSpec[]
-        {FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"),}, new RowSpec[]
-        {FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.MIN_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-                FormSpecs.PREF_ROWSPEC,}));
-        JPanel panel = new JPanel();
-        add(panel, "2, 2, fill, center");
-        panel.setLayout(new FormLayout(new ColumnSpec[]
-        {FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("default:grow"), FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-                FormSpecs.MIN_COLSPEC, FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, FormSpecs.MIN_COLSPEC,}, new RowSpec[]
-        {RowSpec.decode("23px"),}));
+	@Override
+	protected void init()
+	{
+		setLayout(new FormLayout(new ColumnSpec[]
+		{ FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"), }, new RowSpec[]
+		{ FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.MIN_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
+				FormSpecs.PREF_ROWSPEC, }));
+		JPanel panel = new JPanel();
+		add(panel, "2, 2, fill, center");
+		panel.setLayout(new FormLayout(new ColumnSpec[]
+		{ FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("default:grow"), FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
+				FormSpecs.MIN_COLSPEC, FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, FormSpecs.MIN_COLSPEC, }, new RowSpec[]
+		{ RowSpec.decode("23px"), }));
 
-        filteringInputField = new JTextField();
-        panel.add(filteringInputField, "2, 1, fill, center");
-        filteringInputField.setColumns(10);
-        filteringInputField.addKeyListener(new KeyListener()
-        {
+		filteringInputField = new JTextField();
+		panel.add(filteringInputField, "2, 1, fill, center");
+		filteringInputField.setColumns(10);
+		filteringInputField.addKeyListener(new KeyListener()
+		{
 
-            @Override
-            public void keyTyped(final KeyEvent e)
-            {
-                listFilter = (final String input) -> input.contains(filteringInputField.getText());
-                list.setModel(getListModel());
-            }
+			@Override
+			public void keyTyped(final KeyEvent e)
+			{
+				listFilter = (final String input) -> input.contains(filteringInputField.getText());
+				list.setModel(getListModel());
+			}
 
-            @Override
-            public void keyReleased(final KeyEvent e)
-            {
-            }
+			@Override
+			public void keyReleased(final KeyEvent e)
+			{
+				// Not needed
+			}
 
-            @Override
-            public void keyPressed(final KeyEvent e)
-            {
-            }
-        });
-        // filteringInputField.addActionListener(new ActionListener()
-        // {
-        // @Override
-        // public void actionPerformed(final ActionEvent e)
-        // {
-        // listFilter = new Predicate<String>()
-        // {
-        // @Override
-        // public boolean apply(@Nullable final String input)
-        // {
-        // return input.contains(filteringInputField.getText());
-        // }
-        // };
-        // list.setModel(getListModel());
-        // }
-        // });
+			@Override
+			public void keyPressed(final KeyEvent e)
+			{
+				// Not needed
+			}
+		});
 
-        JButton selectAll = new JButton("Alle ausw\u00E4hlen");
-        panel.add(selectAll, "4, 1, left, top");
-        selectAll.addActionListener(e -> list.setSelectionInterval(0, list.getModel().getSize() - 1));
+		JButton selectAll = new JButton("Alle ausw\u00E4hlen");
+		panel.add(selectAll, "4, 1, left, top");
+		selectAll.addActionListener(e -> list.setSelectionInterval(0, list.getModel().getSize() - 1));
 
-        JButton selectNone = new JButton("Alle abw\u00E4hlen");
-        panel.add(selectNone, "6, 1");
-        selectNone.addActionListener(e -> list.setSelectedIndices(new int[0]));
-        JScrollPane scrollPane = new JScrollPane();
-        add(scrollPane, "2, 4, fill, fill");
+		JButton selectNone = new JButton("Alle abw\u00E4hlen");
+		panel.add(selectNone, "6, 1");
+		selectNone.addActionListener(e -> list.setSelectedIndices(new int[0]));
+		JScrollPane scrollPane = new JScrollPane();
+		add(scrollPane, "2, 4, fill, fill");
 
-        list = new JList<>();
-        scrollPane.setViewportView(list);
-        list.setModel(getListModel());
-    }
+		list = new JList<>();
+		scrollPane.setViewportView(list);
+		list.setModel(getListModel());
+	}
 
-    private AbstractListModel<String> getListModel()
-    {
-        return new AbstractListModel<String>()
-        {
-            private static final long serialVersionUID = -5488028287436447719L;
+	private AbstractListModel<String> getListModel()
+	{
+		return new AbstractListModel<String>()
+		{
+			private static final long serialVersionUID = -5488028287436447719L;
 
-            @Override
-            public int getSize()
-            {
-                return (int) values.stream().filter(listFilter).count();
-            }
+			@Override
+			public int getSize()
+			{
+				return (int) values.stream().filter(listFilter).count();
+			}
 
-            @Override
-            public String getElementAt(final int index)
-            {
-                return values.stream().filter(listFilter).collect(Collectors.toList()).get(index);
-            }
-        };
-    }
+			@Override
+			public String getElementAt(final int index)
+			{
+				return values.stream().filter(listFilter).collect(Collectors.toList()).get(index);
+			}
+		};
+	}
 
-    @Override
-    public String getTitle()
-    {
-        return "Klasse";
-    }
+	@Override
+	public String getTitle()
+	{
+		return "Klasse";
+	}
 
-    @Override
-    public List<String> getSelectedValues()
-    {
-        return list.getSelectedValuesList();
-    }
+	@Override
+	public List<String> getSelectedValues()
+	{
+		return list.getSelectedValuesList();
+	}
 
-    @Override
-    public void setValues(final List<String> argValues)
-    {
-        values = argValues;
-        list.setModel(new AbstractListModel<String>()
-        {
-            private static final long serialVersionUID = -1834746057622280163L;
+	@Override
+	public void setValues(final List<String> argValues)
+	{
+		values = argValues;
+		list.setModel(new AbstractListModel<String>()
+		{
+			private static final long serialVersionUID = -1834746057622280163L;
 
-            @Override
-            public String getElementAt(final int index)
-            {
-                return values.get(index);
-            }
+			@Override
+			public String getElementAt(final int index)
+			{
+				return values.get(index);
+			}
 
-            @Override
-            public int getSize()
-            {
-                return values.size();
-            }
-        });
-        // list.setModel(getListModel());
-        list.setEnabled(true);
-    }
+			@Override
+			public int getSize()
+			{
+				return values.size();
+			}
+		});
+		list.setEnabled(true);
+	}
 
-    public JList<String> getList()
-    {
-        return list;
-    }
+	public JList<String> getList()
+	{
+		return list;
+	}
 
-    @Override
-    public void setValuesFromIndex(final Index index)
-    {
-        Collection<String> classList = index.getClassList();
-        setValues(classList.stream().sorted().collect(Collectors.toList()));
-    }
+	@Override
+	public void setValuesFromIndex(final Index index)
+	{
+		Collection<String> classList = index.getClassList();
+		setValues(classList.stream().sorted().collect(Collectors.toList()));
+	}
 
-    @Override
-    public Method getEventMethod(final Class<?> clazz)
-    {
-        try
-        {
-            return clazz.getMethod("getClazz");
-        }
-        catch (NoSuchMethodException | SecurityException e)
-        {
-            return null;
-        }
-    }
+	@Override
+	public Method getEventMethod(final Class<?> clazz)
+	{
+		try
+		{
+			return clazz.getMethod("getClazz");
+		}
+		catch (NoSuchMethodException | SecurityException e)
+		{
+			return null;
+		}
+	}
 
-    @Override
-    public boolean isImplemented()
-    {
-        return true;
-    }
+	@Override
+	public boolean isImplemented()
+	{
+		return true;
+	}
 }

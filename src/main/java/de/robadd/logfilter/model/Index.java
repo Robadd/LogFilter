@@ -101,5 +101,10 @@ public abstract class Index
 		return maxDate;
 	}
 
+	public TimeSpan getTimeSpan()
+	{
+		return new TimeSpan(minDate, maxDate);
+	}
+
 	public abstract void addLogTypeSpecifics(Event msg);
 }

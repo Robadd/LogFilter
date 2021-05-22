@@ -18,7 +18,7 @@ public abstract class FilterPanel<T> extends JPanel
 {
 	private static final long serialVersionUID = 3914473837809874011L;
 
-	public FilterPanel()
+	protected FilterPanel()
 	{
 		super();
 		setBorder(new TitledBorder(null, getTitle(), TitledBorder.LEADING, TitledBorder.TOP, null, null));

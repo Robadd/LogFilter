@@ -1,41 +1,48 @@
 package de.robadd.logfilter.logtypes.ebay;
 
+import static java.lang.Math.min;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-
-import com.jgoodies.common.base.Strings;
 
 import de.robadd.logfilter.model.Message;
 
 public class EbayMessage implements Message
 {
-    private String requestMethod;
-    private String msg;
+	private String requestMethod;
+	private String msg;
+	private boolean usePrescan = false;
 
-    @Override
-    public void character(final String str)
-    {
-        if (!Strings.isBlank(str))
-        {
-            msg = str;
-            Pattern pattern = Pattern.compile("([a-zA-Z]*)(Request|Response)");
-            Matcher matcher = pattern.matcher(str);
-            if (matcher.find())
-            {
-                requestMethod = matcher.group(0);
-            }
-        }
-    }
+	@Override
+	public void character(final String str)
+	{
+		setRequestMethod(str);
+	}
 
-    @Override
-    public String getRequestMethod()
-    {
-        return requestMethod;
-    }
+	private void setRequestMethod(final String strInput)
+	{
+		final String str = strInput.substring(0, min(500, strInput.length()));
+		if (!str.contains("Request") && !str.contains("Response"))
+		{
+			return;
+		}
+		Pattern pattern = Pattern.compile("([a-zA-Z]*)(Request|Response)");
+		Matcher matcherSecond = pattern.matcher(str);
+		if (matcherSecond.find())
+		{
+			requestMethod = matcherSecond.group(0);
+		}
+	}
 
-    @Override
-    public String toString()
-    {
-        return msg;
-    }
+	@Override
+	public String getRequestMethod()
+	{
+		return requestMethod;
+	}
+
+	@Override
+	public String toString()
+	{
+		return msg;
+	}
 }

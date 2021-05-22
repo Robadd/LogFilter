@@ -30,26 +30,22 @@ public class EventFilter<T extends Event, S>
 
 	private void setTestMethod(final Method getter)
 	{
-		addPredicate(new Predicate<Event>()
+		addPredicate(t ->
 		{
-			@Override
-			public boolean test(final Event t)
+			try
 			{
-				try
+				if (getter == null)
 				{
-					if (getter == null)
-					{
-						return true;
-					}
-					@SuppressWarnings("unchecked")
-					S val = (S) getter.invoke(t);
-					return filterValues.stream().anyMatch(a -> a.equals(val));
+					return true;
 				}
-				catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
-				{
-					e.printStackTrace();
-					return false;
-				}
+				@SuppressWarnings("unchecked")
+				S val = (S) getter.invoke(t);
+				return filterValues.stream().anyMatch(a -> a.equals(val));
+			}
+			catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
+			{
+				e.printStackTrace();
+				return false;
 			}
 		});
 	}

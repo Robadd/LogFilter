@@ -23,7 +23,7 @@ import de.robadd.logfilter.model.Index;
 public class CallTypeFilterPanel extends FilterPanel<String>
 {
 	private static final String DEFAULT_GROW = "default:grow";
-    private static final long serialVersionUID = 7450798551103817546L;
+	private static final long serialVersionUID = 7450798551103817546L;
 	private JList<String> list;
 	private List<String> values = new ArrayList<>();
 
@@ -100,7 +100,6 @@ public class CallTypeFilterPanel extends FilterPanel<String>
 				return values.size();
 			}
 		});
-		// list.setModel(getListModel());
 		list.setEnabled(true);
 	}
 
