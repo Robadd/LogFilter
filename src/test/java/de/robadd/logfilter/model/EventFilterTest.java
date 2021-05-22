@@ -2,6 +2,7 @@ package de.robadd.logfilter.model;
 
 import java.lang.reflect.Method;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import de.robadd.logfilter.logtypes.ebay.EbayMessage;
@@ -42,6 +43,6 @@ public class EventFilterTest
 		Message msg = new EbayMessage();
 		msg.character(
 			"<?xml version='1.0' encoding='utf-8'?><soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"><soapenv:Header/><soapenv:Body><ns1:CompleteSaleRequest xmlns:ns1=\"urn:ebay:apis:eBLBaseComponents\" xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:type=\"ns1:CompleteSaleRequestType\"><ns1:DetailLevel>ReturnAll</ns1:DetailLevel><ns1:ErrorLanguage>de_DE</ns1:ErrorLanguage><ns1:Version>1131</ns1:Version><ns1:ErrorHandling>BestEffort</ns1:ErrorHandling><ns1:Shipped>false</ns1:Shipped><ns1:OrderID>19-05357-27675</ns1:OrderID></ns1:CompleteSaleRequest></soapenv:Body></soapenv:Envelope>\r\n");
-		assert !msg.getRequestMethod().isEmpty();
+		Assertions.assertThat(msg.getRequestMethod()).isNotEmpty();
 	}
 }
