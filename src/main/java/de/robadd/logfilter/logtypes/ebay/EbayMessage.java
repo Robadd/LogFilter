@@ -5,13 +5,14 @@ import static java.lang.Math.min;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import com.jgoodies.common.base.Strings;
+
 import de.robadd.logfilter.model.Message;
 
 public class EbayMessage implements Message
 {
 	private String requestMethod;
 	private String msg;
-	private boolean usePrescan = false;
 
 	@Override
 	public void character(final String str)
@@ -21,6 +22,11 @@ public class EbayMessage implements Message
 
 	private void setRequestMethod(final String strInput)
 	{
+		if (Strings.isBlank(strInput))
+		{
+			return;
+		}
+		msg = strInput;
 		final String str = strInput.substring(0, min(500, strInput.length()));
 		if (!str.contains("Request") && !str.contains("Response"))
 		{

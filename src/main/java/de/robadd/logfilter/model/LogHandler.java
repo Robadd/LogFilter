@@ -105,24 +105,19 @@ public class LogHandler extends DefaultHandler
 		}
 		else if ("locationInfo".equals(qName))
 		{
-
 			event.setClazz(attributes.getValue("class"));
 			event.setMethod(attributes.getValue("method"));
 			event.setFile(attributes.getValue("file"));
 			try
 			{
-
 				event.setLine(Integer.valueOf(attributes.getValue("line").replace(".", "")));
-
 			}
 			catch (NumberFormatException e)
 			{
 				e.printStackTrace();
 			}
-
 		}
 		config.fillElement(event, uri, localName, qName, attributes);
-
 	}
 
 	@Override
@@ -137,7 +132,6 @@ public class LogHandler extends DefaultHandler
 		{
 			event.setThrowable(new String(ch, start, length));
 		}
-
 	}
 
 	@Override
