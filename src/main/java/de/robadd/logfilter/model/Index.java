@@ -13,7 +13,7 @@ public abstract class Index
 	protected LocalDateTime maxDate;
 	private Integer eventCount = 0;
 
-	public void addEvent(final Event msg)
+	public synchronized void addEvent(final Event msg)
 	{
 		setMinDate(msg.getTimestamp());
 		setMaxDate(msg.getTimestamp());

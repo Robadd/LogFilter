@@ -165,12 +165,11 @@ public class Event
 		this.message = message;
 	}
 
-	public void messageCharacter(final char[] ch, final int start, final int length)
+	public void messageCharacter(final String string)
 	{
 		if (message != null)
 		{
-			String str = String.valueOf(ch, start, length);
-			message.character(str);
+			message.character(string);
 		}
 	}
 
@@ -209,4 +208,5 @@ public class Event
 	{
 		return null;
 	}
+
 }

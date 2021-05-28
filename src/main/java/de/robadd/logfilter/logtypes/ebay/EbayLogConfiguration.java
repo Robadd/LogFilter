@@ -1,7 +1,5 @@
 package de.robadd.logfilter.logtypes.ebay;
 
-import org.xml.sax.Attributes;
-
 import de.robadd.logfilter.logtypes.LogConfiguration;
 import de.robadd.logfilter.model.Event;
 import de.robadd.logfilter.model.EventBuilder;
@@ -19,13 +17,9 @@ public class EbayLogConfiguration implements LogConfiguration
 	}
 
 	@Override
-	public void fillElement(final Event event, final String uri, final String localName, final String qName,
-			final Attributes attributes)
+	public void fillElement(final Event event)
 	{
-		if ("message".equals(qName))
-		{
-			event.setMessage(new EbayMessage());
-		}
+		event.setMessage(new EbayMessage());
 	}
 
 	@Override

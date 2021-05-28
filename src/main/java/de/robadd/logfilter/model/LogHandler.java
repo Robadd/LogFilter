@@ -4,11 +4,10 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Locale;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 import java.util.function.Function;
 
 import org.xml.sax.Attributes;
@@ -16,6 +15,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import de.robadd.logfilter.logtypes.LogConfiguration;
+import de.robadd.logfilter.model.multithread.ReadEvent;
 
 public class LogHandler extends DefaultHandler
 {
@@ -33,6 +33,8 @@ public class LogHandler extends DefaultHandler
 	private File outputFile;
 	private Function<Integer, Void> progressDisplay;
 	private long total = 0;
+	private ReadEvent readEvent;
+	private Executor executor;
 
 	public enum Type
 	{
@@ -69,6 +71,7 @@ public class LogHandler extends DefaultHandler
 	{
 		totalEventCount = 0;
 		handledEventCount = 0;
+		executor = Executors.newCachedThreadPool();
 		if (Type.READING.equals(type))
 		{
 			index = config.getIndexBuilder().build();
@@ -91,57 +94,51 @@ public class LogHandler extends DefaultHandler
 	public void startElement(final String uri, final String localName, final String qName, final Attributes attributes)
 			throws SAXException
 	{
-
 		elementName = qName;
-		if (isEventElement())
+		if ("event".equals(qName))
 		{
-			event = eventBuilder.build();
-			event.setLevel(LogLevel.getByValue(attributes.getValue("level")));
-			event.setThread(attributes.getValue("thread"));
-			event.setLogger(attributes.getValue("logger"));
-			event.setTimestamp(LocalDateTime.from(DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm:ss", Locale.GERMAN).parse(
-				attributes.getValue("timestamp"))));
-
+			readEvent = new ReadEvent(config, executor);
+			readEvent.addEventConsumer(e ->
+			{
+				index.addEvent(e);
+				return null;
+			});
+			readEvent.startElement(qName, attributes);
 		}
-		else if ("locationInfo".equals(qName))
+		if (readEvent != null)
 		{
-			event.setClazz(attributes.getValue("class"));
-			event.setMethod(attributes.getValue("method"));
-			event.setFile(attributes.getValue("file"));
-			try
-			{
-				event.setLine(Integer.valueOf(attributes.getValue("line").replace(".", "")));
-			}
-			catch (NumberFormatException e)
-			{
-				e.printStackTrace();
-			}
+			readEvent.startElement(qName, attributes);
 		}
-		config.fillElement(event, uri, localName, qName, attributes);
 	}
 
 	@Override
 	public void characters(final char[] ch, final int start, final int length) throws SAXException
 	{
-		if (isMessageElement() && event != null)
+		final String string = new String(ch, start, length);
+		if (readEvent == null || length <= 1)
 		{
-			event.messageCharacter(ch, start, length);
-
+			return;
 		}
-		else if ("throwable".equals(elementName) && length > 1 && event != null)
+
+		if ("message".equals(elementName))
 		{
-			event.setThrowable(new String(ch, start, length));
+			readEvent.addMessage(string);
+		}
+		else if ("throwable".equals(elementName))
+		{
+			readEvent.addThrowable(string);
 		}
 	}
 
 	@Override
 	public void endElement(final String uri, final String localName, final String qName) throws SAXException
 	{
+
 		if ("event".equals(qName))
 		{
 			if (Type.READING.equals(type))
 			{
-				index.addEvent(event);
+				readEvent.complete();
 			}
 			else if (Type.WRITING.equals(type))
 			{
