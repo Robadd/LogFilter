@@ -12,8 +12,6 @@ public class Main
 
     public static void main(final String[] args)
     {
-        // TODO close filehandler on write
-        // TODO log throwable
         try
         {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
