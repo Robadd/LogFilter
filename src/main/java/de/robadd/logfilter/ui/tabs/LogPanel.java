@@ -26,6 +26,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
+import de.robadd.logfilter.Config;
 import de.robadd.logfilter.logtypes.LogConfiguration;
 import de.robadd.logfilter.model.Event;
 import de.robadd.logfilter.model.EventFilter;
@@ -126,7 +127,7 @@ public abstract class LogPanel extends JPanel
 		return e ->
 		{
 			JFileChooser fileChooser = new JFileChooser();
-			fileChooser.setCurrentDirectory(new File("C:\\programming\\eclipse2"));
+			fileChooser.setCurrentDirectory(new File(Config.getInstance().getInDirectory()));
 			int result = fileChooser.showOpenDialog(open);
 			if (result == JFileChooser.APPROVE_OPTION)
 			{
@@ -154,7 +155,7 @@ public abstract class LogPanel extends JPanel
 			public void run()
 			{
 				JFileChooser fileChooser = new JFileChooser();
-				fileChooser.setCurrentDirectory(new File("C:\\programming\\eclipse2"));
+				fileChooser.setCurrentDirectory(new File(Config.getInstance().getOutDirectory()));
 				int result = fileChooser.showSaveDialog(save);
 				if (result == JFileChooser.APPROVE_OPTION)
 				{

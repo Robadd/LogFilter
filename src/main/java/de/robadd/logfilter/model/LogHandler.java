@@ -32,7 +32,6 @@ public class LogHandler extends DefaultHandler
 	private Integer totalEventCount = 0;
 	private File outputFile;
 	private Function<Integer, Void> progressDisplay;
-	private long total = 0;
 
 	public enum Type
 	{
