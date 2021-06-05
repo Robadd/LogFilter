@@ -13,6 +13,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.model.Index;
 import de.robadd.logfilter.model.TimeSpan;
 
@@ -32,7 +33,7 @@ public class DateFilterPanel extends FilterPanel<TimeSpan>
 	@Override
 	public String getTitle()
 	{
-		return "Datum";
+		return Translator.getCurrent().get("date");
 	}
 
 	@Override
@@ -57,7 +58,7 @@ public class DateFilterPanel extends FilterPanel<TimeSpan>
 		{ FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.MIN_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.MIN_ROWSPEC,
 				FormSpecs.RELATED_GAP_ROWSPEC, }));
 
-		JLabel fromLabel = new JLabel("Von:");
+		JLabel fromLabel = new JLabel(Translator.getCurrent().get("from"));
 		add(fromLabel, "2, 2");
 
 		JSlider fromTime = new JSlider();
@@ -67,7 +68,7 @@ public class DateFilterPanel extends FilterPanel<TimeSpan>
 		add(fromTextField, "6, 2, fill, default");
 		fromTextField.setColumns(10);
 
-		JLabel toLabel = new JLabel("Bis:");
+		JLabel toLabel = new JLabel(Translator.getCurrent().get("to"));
 		add(toLabel, "2, 4");
 
 		JSlider toTime = new JSlider();

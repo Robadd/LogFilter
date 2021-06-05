@@ -27,6 +27,7 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 
 import de.robadd.logfilter.Config;
+import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.logtypes.LogConfiguration;
 import de.robadd.logfilter.model.Event;
 import de.robadd.logfilter.model.EventFilter;
@@ -80,9 +81,9 @@ public abstract class LogPanel extends JPanel
 		controls = new JPanel();
 		controls.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		add(controls);
-		open = new JButton("Open");
-		load = new JButton("Load");
-		save = new JButton("Save");
+		open = new JButton(Translator.getCurrent().get("Open"));
+		load = new JButton(Translator.getCurrent().get("Load"));
+		save = new JButton(Translator.getCurrent().get("Save"));
 		controls.add(open);
 		controls.add(load);
 		controls.add(save);
@@ -161,7 +162,7 @@ public abstract class LogPanel extends JPanel
 				{
 					final File file = fileChooser.getSelectedFile();
 					logHandler.setToWritingMode(file, getEventFilters());
-					parentWindow.setStatus("Writing");
+					parentWindow.setStatus(Translator.getCurrent().get("status.writing"));
 					try (final MonitoredInputStream monitoredInputStream = new MonitoredInputStream(logHandler
 							.getInputFile(), parentWindow.getProgressBar());)
 					{
@@ -173,7 +174,7 @@ public abstract class LogPanel extends JPanel
 							new ByteArrayInputStream("<dummy>".getBytes()), monitoredInputStream, new ByteArrayInputStream(
 									"</dummy>".getBytes()))));
 						parser.parse(wellFormedXml, logHandler);
-						parentWindow.setStatus(MessageFormat.format("Writing finished {0} elements of {1} written", logHandler
+						parentWindow.setStatus(MessageFormat.format(Translator.getCurrent().get("status.written"), logHandler
 								.getHandledEventCount(), logHandler.getTotalEventCount()));
 					}
 					catch (IOException | ParserConfigurationException | SAXException e1)
@@ -190,7 +191,7 @@ public abstract class LogPanel extends JPanel
 		return new Thread(() ->
 		{
 			logHandler.setToReadingMode();
-			parentWindow.setStatus("Loading");
+			parentWindow.setStatus(Translator.getCurrent().get("status.loading"));
 			try (final MonitoredInputStream monitoredInputStream = new MonitoredInputStream(logHandler.getInputFile(),
 					parentWindow.getProgressBar());)
 			{
@@ -203,7 +204,8 @@ public abstract class LogPanel extends JPanel
 							.getBytes()))));
 				parser.parse(wellFormedXml, logHandler);
 				updateFilterPanels(logHandler.getIndex());
-				parentWindow.setStatus("Loading finished. Read " + logHandler.getTotalEventCount() + " elements.");
+				parentWindow.setStatus(MessageFormat.format(Translator.getCurrent().get("status.loaded"), logHandler
+						.getTotalEventCount()));
 			}
 			catch (ParserConfigurationException | SAXException | IOException e1)
 			{

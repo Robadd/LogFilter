@@ -26,6 +26,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
 import de.robadd.logfilter.InterfaceLoader;
+import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.ui.tabs.LogPanel;
 
 public class MainWindow
@@ -66,7 +67,7 @@ public class MainWindow
 				.decode("right:default"), LABEL_COMPONENT_GAP_COLSPEC, }, new RowSpec[]
 		{ LABEL_COMPONENT_GAP_ROWSPEC, RowSpec.decode("default:grow"), LABEL_COMPONENT_GAP_ROWSPEC, }));
 
-		status = new JLabel("Status");
+		status = new JLabel(Translator.getCurrent().get("Status"));
 		status.setHorizontalAlignment(SwingConstants.LEFT);
 		panel.add(status, "2, 2, left, top");
 

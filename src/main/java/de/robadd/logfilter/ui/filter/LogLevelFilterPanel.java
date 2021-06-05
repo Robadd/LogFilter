@@ -1,6 +1,5 @@
 package de.robadd.logfilter.ui.filter;
 
-import java.awt.GridLayout;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
@@ -10,83 +9,95 @@ import javax.swing.AbstractListModel;
 import javax.swing.JList;
 import javax.swing.UIManager;
 
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
+
+import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.model.Index;
 import de.robadd.logfilter.model.LogLevel;
 
 public class LogLevelFilterPanel extends FilterPanel<LogLevel>
 {
-    private List<LogLevel> values = new ArrayList<>();
-    private JList<LogLevel> list;
+	public LogLevelFilterPanel()
+	{
+	}
 
-    @Override
-    protected void init()
-    {
-        list = new JList<>();
-        setLayout(new GridLayout(0, 1, 0, 0));
-        list.setBorder(UIManager.getBorder("ComboBox.border"));
-        add(list);
-    }
+	private List<LogLevel> values = new ArrayList<>();
+	private JList<LogLevel> list;
 
-    private static final long serialVersionUID = -485708119352809977L;
+	@Override
+	protected void init()
+	{
+		setLayout(new FormLayout(new ColumnSpec[]
+		{ FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("438px:grow"), FormSpecs.RELATED_GAP_COLSPEC, }, new RowSpec[]
+		{ FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.MIN_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, }));
+		list = new JList<>();
+		list.setBorder(UIManager.getBorder("ComboBox.border"));
+		add(list, "2, 2, fill, fill");
+	}
 
-    @Override
-    public String getTitle()
-    {
-        return "Log Level";
-    }
+	private static final long serialVersionUID = -485708119352809977L;
 
-    @Override
-    public List<LogLevel> getSelectedValues()
-    {
-        return list.getSelectedValuesList();
-    }
+	@Override
+	public String getTitle()
+	{
+		return Translator.getCurrent().get("logLevel");
+	}
 
-    @Override
-    public void setValues(final List<LogLevel> argValues)
-    {
-        values = argValues;
-        list.setModel(new AbstractListModel<LogLevel>()
-        {
-            private static final long serialVersionUID = -1834746057622280163L;
+	@Override
+	public List<LogLevel> getSelectedValues()
+	{
+		return list.getSelectedValuesList();
+	}
 
-            @Override
-            public LogLevel getElementAt(final int index)
-            {
-                return values.get(index);
-            }
+	@Override
+	public void setValues(final List<LogLevel> argValues)
+	{
+		values = argValues;
+		list.setModel(new AbstractListModel<LogLevel>()
+		{
+			private static final long serialVersionUID = -1834746057622280163L;
 
-            @Override
-            public int getSize()
-            {
-                return values.size();
-            }
-        });
-        list.setEnabled(true);
-    }
+			@Override
+			public LogLevel getElementAt(final int index)
+			{
+				return values.get(index);
+			}
 
-    @Override
-    public void setValuesFromIndex(final Index index)
-    {
-        values = index.getLogLevels().stream().sorted().collect(Collectors.toList());
-        setValues(values);
-    }
+			@Override
+			public int getSize()
+			{
+				return values.size();
+			}
+		});
+		list.setEnabled(true);
+	}
 
-    @Override
-    public Method getEventMethod(final Class<?> clazz)
-    {
-        try
-        {
-            return clazz.getMethod("getLevel");
-        }
-        catch (NoSuchMethodException | SecurityException e)
-        {
-            return null;
-        }
-    }
+	@Override
+	public void setValuesFromIndex(final Index index)
+	{
+		values = index.getLogLevels().stream().sorted().collect(Collectors.toList());
+		setValues(values);
+	}
 
-    @Override
-    public boolean isImplemented()
-    {
-        return true;
-    }
+	@Override
+	public Method getEventMethod(final Class<?> clazz)
+	{
+		try
+		{
+			return clazz.getMethod("getLevel");
+		}
+		catch (NoSuchMethodException | SecurityException e)
+		{
+			return null;
+		}
+	}
+
+	@Override
+	public boolean isImplemented()
+	{
+		return true;
+	}
 }

@@ -16,6 +16,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.logtypes.ebay.EbayLogIndex;
 import de.robadd.logfilter.logtypes.shopware.ShopwareLogIndex;
 import de.robadd.logfilter.model.Index;
@@ -71,7 +72,7 @@ public class CallTypeFilterPanel extends FilterPanel<String>
 	@Override
 	public String getTitle()
 	{
-		return "Call Typ";
+		return Translator.getCurrent().get("callType");
 	}
 
 	@Override

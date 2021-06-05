@@ -21,6 +21,7 @@ import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.FormSpecs;
 import com.jgoodies.forms.layout.RowSpec;
 
+import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.model.Index;
 
 public class ClassFilterPanel extends FilterPanel<String>
@@ -40,22 +41,40 @@ public class ClassFilterPanel extends FilterPanel<String>
 	protected void init()
 	{
 		setLayout(new FormLayout(new ColumnSpec[]
-		{ FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"), }, new RowSpec[]
-		{ FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.MIN_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC,
-				FormSpecs.PREF_ROWSPEC, }));
+		{ FormSpecs.RELATED_GAP_COLSPEC, ColumnSpec.decode("default:grow"), FormSpecs.RELATED_GAP_COLSPEC, },
+				new RowSpec[]
+				{ FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.MIN_ROWSPEC, FormSpecs.RELATED_GAP_ROWSPEC, RowSpec.decode(
+					"pref:grow"), FormSpecs.RELATED_GAP_ROWSPEC, }));
 		JPanel panel = new JPanel();
 		add(panel, "2, 2, fill, center");
 		panel.setLayout(new FormLayout(new ColumnSpec[]
-		{ FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("default:grow"), FormSpecs.LABEL_COMPONENT_GAP_COLSPEC,
-				FormSpecs.MIN_COLSPEC, FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, FormSpecs.MIN_COLSPEC, }, new RowSpec[]
+		{ ColumnSpec.decode("default:grow"), FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, FormSpecs.MIN_COLSPEC,
+				FormSpecs.LABEL_COMPONENT_GAP_COLSPEC, FormSpecs.MIN_COLSPEC, }, new RowSpec[]
 		{ RowSpec.decode("23px"), }));
 
 		filteringInputField = new JTextField();
-		panel.add(filteringInputField, "2, 1, fill, center");
-		filteringInputField.setColumns(10);
-		filteringInputField.addKeyListener(new KeyListener()
-		{
+		panel.add(filteringInputField, "1, 1, fill, center");
+		filteringInputField.addKeyListener(getSearchKeyListener());
 
+		JButton selectAll = new JButton(Translator.getCurrent().get("SelectAll"));
+		panel.add(selectAll, "3, 1, left, top");
+		selectAll.addActionListener(e -> list.setSelectionInterval(0, list.getModel().getSize() - 1));
+
+		JButton selectNone = new JButton(Translator.getCurrent().get("SelectNone"));
+		panel.add(selectNone, "5, 1");
+		selectNone.addActionListener(e -> list.setSelectedIndices(new int[0]));
+		JScrollPane scrollPane = new JScrollPane();
+		add(scrollPane, "2, 4, fill, fill");
+
+		list = new JList<>();
+		scrollPane.setViewportView(list);
+		list.setModel(getListModel());
+	}
+
+	private KeyListener getSearchKeyListener()
+	{
+		return new KeyListener()
+		{
 			@Override
 			public void keyTyped(final KeyEvent e)
 			{
@@ -74,21 +93,7 @@ public class ClassFilterPanel extends FilterPanel<String>
 			{
 				// Not needed
 			}
-		});
-
-		JButton selectAll = new JButton("Alle ausw\u00E4hlen");
-		panel.add(selectAll, "4, 1, left, top");
-		selectAll.addActionListener(e -> list.setSelectionInterval(0, list.getModel().getSize() - 1));
-
-		JButton selectNone = new JButton("Alle abw\u00E4hlen");
-		panel.add(selectNone, "6, 1");
-		selectNone.addActionListener(e -> list.setSelectedIndices(new int[0]));
-		JScrollPane scrollPane = new JScrollPane();
-		add(scrollPane, "2, 4, fill, fill");
-
-		list = new JList<>();
-		scrollPane.setViewportView(list);
-		list.setModel(getListModel());
+		};
 	}
 
 	private AbstractListModel<String> getListModel()
@@ -114,7 +119,7 @@ public class ClassFilterPanel extends FilterPanel<String>
 	@Override
 	public String getTitle()
 	{
-		return "Klasse";
+		return Translator.getCurrent().get("class");
 	}
 
 	@Override

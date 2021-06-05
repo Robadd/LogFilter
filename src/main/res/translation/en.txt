@@ -1,0 +1,17 @@
+SelectAll=Select all
+SelectNone=Select none
+Open=Open
+Load=Load
+Save=Save
+date=Date
+class=Class
+callType=Calltype
+from=From:
+to=To:
+NotImplemented=Not yet implemented
+logLevel=Log level
+status.status=Status
+status.loading=Loading
+status.loaded={0} elements loaded
+status.writing=Writing
+status.written={0} of {1} elements written

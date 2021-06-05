@@ -15,6 +15,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.logtypes.LogConfiguration;
 
 public class LogHandler extends DefaultHandler
@@ -40,7 +41,7 @@ public class LogHandler extends DefaultHandler
 
 	public void setToDisplayMode()
 	{
-		throw new UnsupportedOperationException("Not yet implemented");
+		throw new UnsupportedOperationException(Translator.getCurrent().get("NotImplemented"));
 	}
 
 	public void setToReadingMode()

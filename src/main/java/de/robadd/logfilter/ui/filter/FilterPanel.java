@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.model.Event;
 import de.robadd.logfilter.model.EventFilter;
 import de.robadd.logfilter.model.EventFilter.EventFilterBuilder;
@@ -28,7 +29,7 @@ public abstract class FilterPanel<T> extends JPanel
 		}
 		else
 		{
-			add(new JLabel("Not implemented yet"));
+			add(new JLabel(Translator.getCurrent().get("NotImplemented")));
 		}
 	}
 

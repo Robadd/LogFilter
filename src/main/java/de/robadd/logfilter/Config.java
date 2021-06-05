@@ -5,6 +5,7 @@ public final class Config
 	private static final Config INSTANCE = new Config();
 	private String inDirectory;
 	private String outDirectory;
+	private String locale;
 
 	/**
 	 * private Constructor
@@ -14,6 +15,7 @@ public final class Config
 		super();
 		inDirectory = "C:\\programming\\eclipse2";
 		outDirectory = "C:\\programming\\eclipse2";
+		locale = "en";
 	}
 
 	/**
@@ -38,5 +40,13 @@ public final class Config
 	public String getOutDirectory()
 	{
 		return outDirectory;
+	}
+
+	/**
+	 * @return the locale
+	 */
+	public String getLocale()
+	{
+		return locale;
 	}
 }
