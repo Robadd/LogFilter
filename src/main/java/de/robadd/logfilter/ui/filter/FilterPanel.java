@@ -8,6 +8,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import de.robadd.logfilter.FilterMethod;
 import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.model.Event;
 import de.robadd.logfilter.model.EventFilter;
@@ -45,7 +46,18 @@ public abstract class FilterPanel<T> extends JPanel
 
 	public abstract boolean isImplemented();
 
-	public abstract Method getEventMethod(final Class<?> clazz);
+	public Method getEventMethod(final Class<?> clazz)
+	{
+		for (Method method : clazz.getMethods())
+		{
+			if (method.isAnnotationPresent(FilterMethod.class) && method.getAnnotation(FilterMethod.class).value()
+					.isAssignableFrom(getClass()))
+			{
+				return method;
+			}
+		}
+		return null;
+	}
 
 	public final EventFilter<Event, T> getEventFilter()
 	{

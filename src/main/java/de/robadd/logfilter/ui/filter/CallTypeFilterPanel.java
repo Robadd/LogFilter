@@ -1,7 +1,5 @@
 package de.robadd.logfilter.ui.filter;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -42,22 +40,6 @@ public class CallTypeFilterPanel extends SearchableFilterPanel
 
 			Collection<String> classList = ind.getCallTypes();
 			setValues(classList.stream().sorted().collect(Collectors.toList()));
-		}
-	}
-
-	@Override
-	public Method getEventMethod(final Class<?> clazz)
-	{
-		try
-		{
-			Method methodGetter = clazz.getDeclaredMethod("getCustomMethod", String.class);
-			Object object = clazz.getDeclaredConstructor().newInstance();
-			return (Method) methodGetter.invoke(object, "getRequestMethod");
-		}
-		catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException | NoSuchMethodException
-				| SecurityException | InstantiationException e)
-		{
-			return null;
 		}
 	}
 

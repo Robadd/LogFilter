@@ -39,11 +39,23 @@ public class MainWindow
 
 	/**
 	 * Create the application.
+	 *
+	 * @param show if ui should be shown
 	 */
 	public MainWindow()
 	{
+		this(true);
+	}
+
+	/**
+	 * Create the application.
+	 *
+	 * @param show if ui should be shown
+	 */
+	public MainWindow(final boolean show)
+	{
 		initialize();
-		getFrame().setVisible(true);
+		getFrame().setVisible(show);
 	}
 
 	/**
@@ -52,7 +64,7 @@ public class MainWindow
 	private void initialize()
 	{
 		frame = new JFrame();
-		getFrame().setBounds(100, 100, 800, 600);
+		getFrame().setBounds(100, 100, 800, 800);
 		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getFrame().getContentPane().setLayout(new FormLayout(new ColumnSpec[]
 		{ ColumnSpec.decode("784px:grow"), }, new RowSpec[]

@@ -13,7 +13,7 @@ public class MainWindowTest
 	@Test
 	public void mainTest()
 	{
-		MainWindow window = new MainWindow();
+		MainWindow window = new MainWindow(false);
 		JTabbedPane frame = window.getFilterPanelFrame();
 		assertThat(frame).extracting(a -> a.getTabCount()).isEqualTo(InterfaceLoader.getLogPanels().size());
 
@@ -22,7 +22,7 @@ public class MainWindowTest
 	@Test
 	public void statusTest() throws InterruptedException
 	{
-		MainWindow window = new MainWindow();
+		MainWindow window = new MainWindow(false);
 		assertThat(window.getStatus().getText()).isEqualTo("Status");
 		window.setStatus("Foobar");
 		Thread.sleep(1000);

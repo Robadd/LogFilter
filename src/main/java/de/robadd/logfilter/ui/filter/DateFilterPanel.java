@@ -1,6 +1,5 @@
 package de.robadd.logfilter.ui.filter;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -83,19 +82,6 @@ public class DateFilterPanel extends FilterPanel<TimeSpan>
 	public void setValuesFromIndex(final Index index)
 	{
 		// TODO implement
-	}
-
-	@Override
-	public Method getEventMethod(final Class<?> clazz)
-	{
-		try
-		{
-			return clazz.getMethod("getTimestamp");
-		}
-		catch (NoSuchMethodException | SecurityException e)
-		{
-			return null;
-		}
 	}
 
 	@Override

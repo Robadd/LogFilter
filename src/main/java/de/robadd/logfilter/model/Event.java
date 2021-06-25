@@ -1,10 +1,15 @@
 package de.robadd.logfilter.model;
 
-import java.lang.reflect.Method;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+
+import de.robadd.logfilter.FilterMethod;
+import de.robadd.logfilter.ui.filter.ClassFilterPanel;
+import de.robadd.logfilter.ui.filter.DateFilterPanel;
+import de.robadd.logfilter.ui.filter.LogLevelFilterPanel;
+import de.robadd.logfilter.ui.filter.ThreadFilterPanel;
 
 public class Event
 {
@@ -40,6 +45,7 @@ public class Event
 	/**
 	 * @return the timestamp
 	 */
+	@FilterMethod(DateFilterPanel.class)
 	public LocalDateTime getTimestamp()
 	{
 		return timestamp;
@@ -56,6 +62,7 @@ public class Event
 	/**
 	 * @return the level
 	 */
+	@FilterMethod(LogLevelFilterPanel.class)
 	public LogLevel getLevel()
 	{
 		return level;
@@ -72,6 +79,7 @@ public class Event
 	/**
 	 * @return the thread
 	 */
+	@FilterMethod(ThreadFilterPanel.class)
 	public String getThread()
 	{
 		return thread;
@@ -88,6 +96,7 @@ public class Event
 	/**
 	 * @return the clazz
 	 */
+	@FilterMethod(ClassFilterPanel.class)
 	public String getClazz()
 	{
 		return clazz;
@@ -202,11 +211,5 @@ public class Event
 			getLogger(), DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm:ss", Locale.GERMAN).format(getTimestamp()),
 			getLevel(), getThread(), getMessage().toString().trim(), getClazz(), getMethod(), getFile(), getLine(),
 			getThrowable());
-	}
-
-	@SuppressWarnings("java:S1172")
-	public Method getCustomMethod(final String methodName)
-	{
-		return null;
 	}
 }

@@ -1,6 +1,5 @@
 package de.robadd.logfilter.ui.filter;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -27,19 +26,6 @@ public class ClassFilterPanel extends SearchableFilterPanel
 	{
 		Collection<String> classList = index.getClassList();
 		setValues(classList.stream().sorted().collect(Collectors.toList()));
-	}
-
-	@Override
-	public Method getEventMethod(final Class<?> clazz)
-	{
-		try
-		{
-			return clazz.getMethod("getClazz");
-		}
-		catch (NoSuchMethodException | SecurityException e)
-		{
-			return null;
-		}
 	}
 
 	@Override

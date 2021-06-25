@@ -1,6 +1,5 @@
 package de.robadd.logfilter.ui.filter;
 
-import java.lang.reflect.Method;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
@@ -33,19 +32,6 @@ public class ThreadFilterPanel extends SearchableFilterPanel
 	public boolean isImplemented()
 	{
 		return true;
-	}
-
-	@Override
-	public Method getEventMethod(final Class<?> clazz)
-	{
-		try
-		{
-			return clazz.getMethod("getThread");
-		}
-		catch (NoSuchMethodException | SecurityException e)
-		{
-			return null;
-		}
 	}
 
 }

@@ -1,6 +1,5 @@
 package de.robadd.logfilter.ui.filter;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -80,19 +79,6 @@ public class LogLevelFilterPanel extends FilterPanel<LogLevel>
 	{
 		values = index.getLogLevels().stream().sorted().collect(Collectors.toList());
 		setValues(values);
-	}
-
-	@Override
-	public Method getEventMethod(final Class<?> clazz)
-	{
-		try
-		{
-			return clazz.getMethod("getLevel");
-		}
-		catch (NoSuchMethodException | SecurityException e)
-		{
-			return null;
-		}
 	}
 
 	@Override
