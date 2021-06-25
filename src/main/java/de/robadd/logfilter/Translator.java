@@ -25,7 +25,8 @@ public class Translator
 
 	public String get(final String key)
 	{
-		return translations.get(key);
+		String string = translations.get(key);
+		return string == null ? key : string;
 	}
 
 	private Translator(final String locale)

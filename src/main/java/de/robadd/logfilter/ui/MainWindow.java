@@ -35,6 +35,7 @@ public class MainWindow
 	private Collection<LogPanel> tabs = new ArrayList<>();
 	private JLabel status;
 	private JProgressBar progressBar;
+	private JTabbedPane filterPanels;
 
 	/**
 	 * Create the application.
@@ -42,6 +43,7 @@ public class MainWindow
 	public MainWindow()
 	{
 		initialize();
+		getFrame().setVisible(true);
 	}
 
 	/**
@@ -50,26 +52,26 @@ public class MainWindow
 	private void initialize()
 	{
 		frame = new JFrame();
-		frame.setBounds(100, 100, 800, 600);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.getContentPane().setLayout(new FormLayout(new ColumnSpec[]
+		getFrame().setBounds(100, 100, 800, 600);
+		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getFrame().getContentPane().setLayout(new FormLayout(new ColumnSpec[]
 		{ ColumnSpec.decode("784px:grow"), }, new RowSpec[]
 		{ RowSpec.decode("fill:pref:grow"), MIN_ROWSPEC, }));
-		JTabbedPane tabbedPane = new JTabbedPane(BOTTOM);
-		frame.getContentPane().add(tabbedPane, "1, 1, fill, fill");
-		addPanels(tabbedPane);
+		filterPanels = new JTabbedPane(BOTTOM);
+		getFrame().getContentPane().add(filterPanels, "1, 1, fill, fill");
+		addPanels(filterPanels);
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new BevelBorder(LOWERED, null, null, null, null));
-		frame.getContentPane().add(panel, "1, 2, fill, top");
+		getFrame().getContentPane().add(panel, "1, 2, fill, top");
 		panel.setLayout(new FormLayout(new ColumnSpec[]
 		{ LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("left:default"), ColumnSpec.decode("default:grow"), ColumnSpec
 				.decode("right:default"), LABEL_COMPONENT_GAP_COLSPEC, }, new RowSpec[]
 		{ LABEL_COMPONENT_GAP_ROWSPEC, RowSpec.decode("default:grow"), LABEL_COMPONENT_GAP_ROWSPEC, }));
 
 		status = new JLabel(Translator.getCurrent().get("Status"));
-		status.setHorizontalAlignment(SwingConstants.LEFT);
-		panel.add(status, "2, 2, left, top");
+		getStatus().setHorizontalAlignment(SwingConstants.LEFT);
+		panel.add(getStatus(), "2, 2, left, top");
 
 		progressBar = new JProgressBar();
 		panel.add(getProgressBar(), "4, 2, left, top");
@@ -111,16 +113,29 @@ public class MainWindow
 
 	public void setStatus(final String text)
 	{
-		EventQueue.invokeLater(() -> status.setText(text));
-	}
-
-	public void setFrameVisible()
-	{
-		this.frame.setVisible(true);
+		EventQueue.invokeLater(() -> getStatus().setText(text));
 	}
 
 	public JProgressBar getProgressBar()
 	{
 		return progressBar;
+	}
+
+	/**
+	 * @return the frame
+	 */
+	JTabbedPane getFilterPanelFrame()
+	{
+		return filterPanels;
+	}
+
+	JFrame getFrame()
+	{
+		return frame;
+	}
+
+	JLabel getStatus()
+	{
+		return status;
 	}
 }

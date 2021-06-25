@@ -9,6 +9,7 @@ public abstract class Index
 {
 	private Set<String> classes = new HashSet<>();
 	private Set<LogLevel> logLevels = new HashSet<>();
+	private Set<String> threads = new HashSet<>();
 	protected LocalDateTime minDate;
 	protected LocalDateTime maxDate;
 	private Integer eventCount = 0;
@@ -19,8 +20,14 @@ public abstract class Index
 		setMaxDate(msg.getTimestamp());
 		addClass(msg.getClazz());
 		addLogLevel(msg.getLevel());
+		addThread(msg.getThread());
 		addLogTypeSpecifics(msg);
 		eventCount++;
+	}
+
+	private void addThread(final String thread)
+	{
+		threads.add(thread);
 	}
 
 	public Integer getEventCount()
@@ -107,4 +114,9 @@ public abstract class Index
 	}
 
 	public abstract void addLogTypeSpecifics(Event msg);
+
+	public Set<String> getThreads()
+	{
+		return threads;
+	}
 }

@@ -16,16 +16,15 @@ public class Main
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		}
 		catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e1)
+				| UnsupportedLookAndFeelException e)
 		{
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
 		EventQueue.invokeLater(() ->
 		{
 			try
 			{
-				MainWindow window = new MainWindow();
-				window.setFrameVisible();
+				new MainWindow();
 			}
 			catch (Exception e)
 			{
