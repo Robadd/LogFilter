@@ -26,6 +26,11 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.SAXException;
 
+import com.jgoodies.forms.layout.ColumnSpec;
+import com.jgoodies.forms.layout.FormLayout;
+import com.jgoodies.forms.layout.FormSpecs;
+import com.jgoodies.forms.layout.RowSpec;
+
 import de.robadd.logfilter.Config;
 import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.logtypes.LogConfiguration;
@@ -62,7 +67,6 @@ public abstract class LogPanel extends JPanel
 
 	protected LogPanel()
 	{
-		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		addFilteringPanel();
 		addControlPanel();
 		config = getLogConfiguration();
@@ -71,19 +75,25 @@ public abstract class LogPanel extends JPanel
 
 	private void addFilteringPanel()
 	{
+		setLayout(new FormLayout(new ColumnSpec[]
+		{ ColumnSpec.decode("450px"), }, new RowSpec[]
+		{ RowSpec.decode("default:grow"), FormSpecs.RELATED_GAP_ROWSPEC, FormSpecs.MIN_ROWSPEC, }));
 		filter = new JPanel();
 		filter.setLayout(new BoxLayout(filter, BoxLayout.Y_AXIS));
-		add(filter);
+		add(filter, "1, 1, center, center");
 	}
 
 	private void addControlPanel()
 	{
 		controls = new JPanel();
 		controls.setAlignmentY(Component.BOTTOM_ALIGNMENT);
-		add(controls);
+		add(controls, "1, 3, center, bottom");
 		open = new JButton(Translator.getCurrent().get("Open"));
+		open.setName("BtnOpen");
 		load = new JButton(Translator.getCurrent().get("Load"));
+		load.setName("BtnLoad");
 		save = new JButton(Translator.getCurrent().get("Save"));
+		save.setName("BtnSave");
 		controls.add(open);
 		controls.add(load);
 		controls.add(save);

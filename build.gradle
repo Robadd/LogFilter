@@ -33,6 +33,7 @@ dependencies {
 	
     testImplementation 'org.testng:testng:7.2.0'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.19.0'
+    testImplementation group: 'org.assertj', name: 'assertj-swing-junit', version: '3.17.1'
     
 }
 

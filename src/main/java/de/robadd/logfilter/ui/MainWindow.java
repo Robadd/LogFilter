@@ -10,8 +10,6 @@ import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.dnd.DropTarget;
 import java.awt.dnd.DropTargetDropEvent;
-import java.util.ArrayList;
-import java.util.Collection;
 
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -29,10 +27,9 @@ import de.robadd.logfilter.InterfaceLoader;
 import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.ui.tabs.LogPanel;
 
-public class MainWindow
+public class MainWindow extends JFrame
 {
-	private JFrame frame;
-	private Collection<LogPanel> tabs = new ArrayList<>();
+	private static final long serialVersionUID = 1L;
 	private JLabel status;
 	private JProgressBar progressBar;
 	private JTabbedPane filterPanels;
@@ -55,7 +52,7 @@ public class MainWindow
 	public MainWindow(final boolean show)
 	{
 		initialize();
-		getFrame().setVisible(show);
+		setVisible(show);
 	}
 
 	/**
@@ -63,19 +60,19 @@ public class MainWindow
 	 */
 	private void initialize()
 	{
-		frame = new JFrame();
-		getFrame().setBounds(100, 100, 800, 800);
-		getFrame().setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		getFrame().getContentPane().setLayout(new FormLayout(new ColumnSpec[]
+		setBounds(100, 100, 800, 800);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		getContentPane().setLayout(new FormLayout(new ColumnSpec[]
 		{ ColumnSpec.decode("784px:grow"), }, new RowSpec[]
 		{ RowSpec.decode("fill:pref:grow"), MIN_ROWSPEC, }));
 		filterPanels = new JTabbedPane(BOTTOM);
-		getFrame().getContentPane().add(filterPanels, "1, 1, fill, fill");
-		addPanels(filterPanels);
+		filterPanels.setName("TabbedPaneFilterPanels");
+		getContentPane().add(filterPanels, "1, 1, fill, fill");
+		addPanels();
 
 		JPanel panel = new JPanel();
 		panel.setBorder(new BevelBorder(LOWERED, null, null, null, null));
-		getFrame().getContentPane().add(panel, "1, 2, fill, top");
+		getContentPane().add(panel, "1, 2, fill, top");
 		panel.setLayout(new FormLayout(new ColumnSpec[]
 		{ LABEL_COMPONENT_GAP_COLSPEC, ColumnSpec.decode("left:default"), ColumnSpec.decode("default:grow"), ColumnSpec
 				.decode("right:default"), LABEL_COMPONENT_GAP_COLSPEC, }, new RowSpec[]
@@ -89,21 +86,20 @@ public class MainWindow
 		panel.add(getProgressBar(), "4, 2, left, top");
 	}
 
-	private void addPanels(final JTabbedPane tabbedPane)
+	private void addPanels()
 	{
-		tabs.addAll(InterfaceLoader.getLogPanels());
-		tabs.stream().forEach(tab ->
+		InterfaceLoader.getLogPanels().stream().forEach(tab ->
 		{
 			tab.setParent(this);
-			tabbedPane.addTab(tab.getTitle(), tab.getIcon(), tab, null);
+			filterPanels.addTab(tab.getTitle(), tab.getIcon(), tab, null);
 		});
-		Component[] components = tabbedPane.getComponents();
+		Component[] components = filterPanels.getComponents();
 		for (int i = 0; i < components.length; i++)
 		{
 			Component component = components[i];
 			if (component instanceof LogPanel)
 			{
-				tabbedPane.setEnabledAt(i, ((LogPanel) component).isImplemented());
+				filterPanels.setEnabledAt(i, ((LogPanel) component).isImplemented());
 			}
 		}
 	}
@@ -143,7 +139,7 @@ public class MainWindow
 
 	JFrame getFrame()
 	{
-		return frame;
+		return this;
 	}
 
 	JLabel getStatus()

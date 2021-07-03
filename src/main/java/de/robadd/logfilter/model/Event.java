@@ -13,18 +13,52 @@ import de.robadd.logfilter.ui.filter.ThreadFilterPanel;
 
 public class Event
 {
-	// event
 	private String logger;
 	private LocalDateTime timestamp;
 	private LogLevel level;
 	private String thread;
-	// locationInfo
 	private String clazz;
 	private String method;
 	private String file;
 	private Integer line;
 	private String throwable;
 	protected Message message;
+
+	/**
+	 * @return the timestamp
+	 */
+	@FilterMethod(DateFilterPanel.class)
+	public LocalDateTime getTimestamp()
+	{
+		return timestamp;
+	}
+
+	/**
+	 * @return the clazz
+	 */
+	@FilterMethod(ClassFilterPanel.class)
+	public String getClazz()
+	{
+		return clazz;
+	}
+
+	/**
+	 * @return the thread
+	 */
+	@FilterMethod(ThreadFilterPanel.class)
+	public String getThread()
+	{
+		return thread;
+	}
+
+	/**
+	 * @return the level
+	 */
+	@FilterMethod(LogLevelFilterPanel.class)
+	public LogLevel getLevel()
+	{
+		return level;
+	}
 
 	/**
 	 * @return the logger
@@ -43,29 +77,11 @@ public class Event
 	}
 
 	/**
-	 * @return the timestamp
-	 */
-	@FilterMethod(DateFilterPanel.class)
-	public LocalDateTime getTimestamp()
-	{
-		return timestamp;
-	}
-
-	/**
 	 * @param timestamp the timestamp to set
 	 */
 	public void setTimestamp(final LocalDateTime timestamp)
 	{
 		this.timestamp = timestamp;
-	}
-
-	/**
-	 * @return the level
-	 */
-	@FilterMethod(LogLevelFilterPanel.class)
-	public LogLevel getLevel()
-	{
-		return level;
 	}
 
 	/**
@@ -77,29 +93,11 @@ public class Event
 	}
 
 	/**
-	 * @return the thread
-	 */
-	@FilterMethod(ThreadFilterPanel.class)
-	public String getThread()
-	{
-		return thread;
-	}
-
-	/**
 	 * @param thread the thread to set
 	 */
 	public void setThread(final String thread)
 	{
 		this.thread = thread;
-	}
-
-	/**
-	 * @return the clazz
-	 */
-	@FilterMethod(ClassFilterPanel.class)
-	public String getClazz()
-	{
-		return clazz;
 	}
 
 	/**

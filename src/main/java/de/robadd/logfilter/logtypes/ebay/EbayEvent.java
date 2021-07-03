@@ -11,5 +11,4 @@ public class EbayEvent extends Event
 	{
 		return message.getRequestMethod();
 	}
-
 }
