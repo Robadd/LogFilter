@@ -5,7 +5,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import de.robadd.logfilter.ui.tabs.AmazonLogPanel;
 import de.robadd.logfilter.ui.tabs.EbayLogPanel;
 import de.robadd.logfilter.ui.tabs.HitmeisterLogPanel;
 import de.robadd.logfilter.ui.tabs.LogPanel;
@@ -24,8 +23,8 @@ public class InterfaceLoader
 
 	enum LogPanels
 	{
-		SERVERLOG(ServerLogPanel.class), EBAY(EbayLogPanel.class), AMAZON(AmazonLogPanel.class), HITMEISTER(
-				HitmeisterLogPanel.class), MAGENTO(MagentoLogPanel.class), SHOPWARE(ShopwareLogPanel.class);
+		SERVERLOG(ServerLogPanel.class), EBAY(EbayLogPanel.class), HITMEISTER(HitmeisterLogPanel.class), MAGENTO(
+				MagentoLogPanel.class), SHOPWARE(ShopwareLogPanel.class);
 
 		private Class<? extends LogPanel> clazz;
 
