@@ -1,6 +1,6 @@
-SelectAll=Alle ausw‰hlen
-SelectNone=Alle abw‰hlen
-Open=÷ffnen
+SelectAll=Alle ausw√§hlen
+SelectNone=Alle abw√§hlen
+Open=√ñffnen
 Load=Laden
 Save=Speichern
 date=Datum
@@ -10,6 +10,7 @@ from=Von:
 to=Bis:
 NotImplemented=Noch nicht impementiert
 logLevel=Loglevel
+messageContent=Message Inhalt
 status.status=Status
 status.loading=Lade
 status.loaded={0} Elemente geladen

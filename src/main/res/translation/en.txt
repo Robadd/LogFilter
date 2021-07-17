@@ -6,6 +6,7 @@ Save=Save
 date=Date
 class=Class
 callType=Calltype
+messageContent=Message Content
 from=From:
 to=To:
 NotImplemented=Not yet implemented

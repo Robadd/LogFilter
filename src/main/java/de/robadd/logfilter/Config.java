@@ -15,7 +15,7 @@ public final class Config
 		super();
 		inDirectory = "C:\\programming\\eclipse2";
 		outDirectory = "C:\\programming\\eclipse2";
-		locale = "en";
+		locale = "de";
 	}
 
 	/**

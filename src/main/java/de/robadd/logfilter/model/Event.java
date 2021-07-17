@@ -9,6 +9,7 @@ import de.robadd.logfilter.FilterMethod;
 import de.robadd.logfilter.ui.filter.ClassFilterPanel;
 import de.robadd.logfilter.ui.filter.DateFilterPanel;
 import de.robadd.logfilter.ui.filter.LogLevelFilterPanel;
+import de.robadd.logfilter.ui.filter.MessageFilterPanel;
 import de.robadd.logfilter.ui.filter.ThreadFilterPanel;
 
 public class Event
@@ -165,6 +166,15 @@ public class Event
 	}
 
 	/**
+	 * @return message as string
+	 */
+	@FilterMethod(MessageFilterPanel.class)
+	public String getMessageContent()
+	{
+		return message.toString();
+	}
+
+	/**
 	 * @param message the message to set
 	 */
 	public void setMessage(final Message message)
@@ -207,7 +217,7 @@ public class Event
 			"<event logger=\"{0}\" timestamp=\"{1}\" level=\"{2}\" thread=\"{3}\" >\r\n<message><![CDATA[{4}]]>\r\n</message>"
 					+ "\r\n<throwable>{9}</throwable><locationInfo class=\"{5}\" method=\"{6}\" file=\"{7}\" line=\"{8}\"/>\r\n</event>",
 			getLogger(), DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm:ss", Locale.GERMAN).format(getTimestamp()),
-			getLevel(), getThread(), getMessage().toString().trim(), getClazz(), getMethod(), getFile(), getLine(),
+			getLevel(), getThread(), getMessageContent().trim(), getClazz(), getMethod(), getFile(), getLine(),
 			getThrowable());
 	}
 }
