@@ -2,6 +2,7 @@ package de.robadd.logfilter;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -16,9 +17,10 @@ public class Translator
 
 	public static Translator getCurrent()
 	{
-		if (instance == null || instance.getLocale().equals(Config.getInstance().getLocale()))
+		String locale = Config.getInstance().getLocale();
+		if (instance == null || instance.getLocale().equals(locale))
 		{
-			instance = new Translator(Config.getInstance().getLocale());
+			instance = new Translator(locale);
 		}
 		return instance;
 	}
@@ -33,9 +35,13 @@ public class Translator
 	{
 		translations = new HashMap<>();
 		this.locale = locale;
-
-		try (BufferedReader br = new BufferedReader(new InputStreamReader(ClassLoader.getSystemResourceAsStream(
-			"translation/" + locale + ".txt"), StandardCharsets.UTF_8)))
+		InputStream systemResourceAsStream = ClassLoader.getSystemResourceAsStream("translation/" + locale + ".txt");
+		if (systemResourceAsStream == null)
+		{
+			return;
+		}
+		try (BufferedReader br = new BufferedReader(new InputStreamReader(systemResourceAsStream,
+				StandardCharsets.UTF_8)))
 		{
 			String line;
 			while ((line = br.readLine()) != null)

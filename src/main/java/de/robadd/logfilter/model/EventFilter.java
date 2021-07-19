@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.function.Predicate;
 
+import de.robadd.logfilter.FilterMethod;
+import de.robadd.logfilter.FilterMethodType;
+
 /**
  * @author Robert Kraus
  * @param <T> The Event type to filter against
@@ -28,6 +31,11 @@ public class EventFilter<T extends Event, S>
 		};
 	}
 
+	/**
+	 * gets the test method
+	 *
+	 * @param getter the getter method
+	 */
 	private void setTestMethod(final Method getter)
 	{
 		addPredicate(t ->
@@ -39,8 +47,20 @@ public class EventFilter<T extends Event, S>
 					return true;
 				}
 				@SuppressWarnings("unchecked")
-				S val = (S) getter.invoke(t);
-				return filterValues.stream().anyMatch(a -> a.equals(val));
+				final S val = (S) getter.invoke(t);
+				final FilterMethod filterAnnotation = getter.getAnnotation(FilterMethod.class);
+				if (FilterMethodType.VALUE.equals(filterAnnotation.type()))
+				{
+					return filterValues.stream().anyMatch(a -> a.equals(val));
+				}
+				else if (FilterMethodType.CONTAIN.equals(filterAnnotation.type()))
+				{
+					return filterValues.stream().anyMatch(a -> val.toString().contains(a.toString()));
+				}
+				else
+				{
+					return true;
+				}
 			}
 			catch (IllegalAccessException | IllegalArgumentException | InvocationTargetException e)
 			{

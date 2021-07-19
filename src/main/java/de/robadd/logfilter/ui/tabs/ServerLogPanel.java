@@ -13,6 +13,7 @@ import de.robadd.logfilter.ui.filter.ClassFilterPanel;
 import de.robadd.logfilter.ui.filter.DateFilterPanel;
 import de.robadd.logfilter.ui.filter.FilterPanel;
 import de.robadd.logfilter.ui.filter.LogLevelFilterPanel;
+import de.robadd.logfilter.ui.filter.MessageFilterPanel;
 import de.robadd.logfilter.ui.filter.ThreadFilterPanel;
 
 public class ServerLogPanel extends LogPanel
@@ -41,7 +42,8 @@ public class ServerLogPanel extends LogPanel
 	{
 		LogLevelFilterPanel loglevelFilter = new LogLevelFilterPanel();
 		loglevelFilter.setValues(Arrays.asList(LogLevel.values()));
-		return Arrays.asList(loglevelFilter, new DateFilterPanel(), new ThreadFilterPanel(), new ClassFilterPanel());
+		return Arrays.asList(loglevelFilter, new DateFilterPanel(), new ThreadFilterPanel(), new ClassFilterPanel(),
+			new MessageFilterPanel());
 	}
 
 	@Override

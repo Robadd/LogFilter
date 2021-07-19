@@ -76,5 +76,4 @@ public abstract class FilterPanel<T> extends JPanel
 		build.setfilterValues(getSelectedValues());
 		return build;
 	}
-
 }

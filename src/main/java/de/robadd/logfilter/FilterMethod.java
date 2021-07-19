@@ -13,4 +13,6 @@ import de.robadd.logfilter.ui.filter.FilterPanel;
 public @interface FilterMethod
 {
 	public Class<?> value() default FilterPanel.class;
+
+	public FilterMethodType type() default FilterMethodType.VALUE;
 }

@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 
 import de.robadd.logfilter.FilterMethod;
+import de.robadd.logfilter.FilterMethodType;
 import de.robadd.logfilter.ui.filter.ClassFilterPanel;
 import de.robadd.logfilter.ui.filter.DateFilterPanel;
 import de.robadd.logfilter.ui.filter.LogLevelFilterPanel;
@@ -168,7 +169,7 @@ public class Event
 	/**
 	 * @return message as string
 	 */
-	@FilterMethod(MessageFilterPanel.class)
+	@FilterMethod(value = MessageFilterPanel.class, type = FilterMethodType.CONTAIN)
 	public String getMessageContent()
 	{
 		return message.toString();
