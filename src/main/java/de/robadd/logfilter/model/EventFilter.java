@@ -70,7 +70,7 @@ public class EventFilter<T extends Event, S>
 		});
 	}
 
-	private void addPredicate(final Predicate<Event> predicate)
+	public void addPredicate(final Predicate<Event> predicate)
 	{
 		predicates.add(predicate);
 	}

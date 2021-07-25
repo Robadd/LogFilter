@@ -1,7 +1,7 @@
 package de.robadd.logfilter.model;
 
-import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -10,8 +10,8 @@ public abstract class Index
 	private Set<String> classes = new HashSet<>();
 	private Set<LogLevel> logLevels = new HashSet<>();
 	private Set<String> threads = new HashSet<>();
-	protected LocalDateTime minDate;
-	protected LocalDateTime maxDate;
+	protected Date minDate;
+	protected Date maxDate;
 	private Integer eventCount = 0;
 
 	public void addEvent(final Event msg)
@@ -71,9 +71,9 @@ public abstract class Index
 	/**
 	 * @param minDate the minDate to set
 	 */
-	private void setMinDate(final LocalDateTime minDate)
+	private void setMinDate(final Date minDate)
 	{
-		if (this.minDate != null && this.minDate.isBefore(minDate))
+		if (this.minDate != null && this.minDate.before(minDate))
 		{
 			return;
 		}
@@ -83,9 +83,9 @@ public abstract class Index
 	/**
 	 * @param maxDate the maxDate to set
 	 */
-	private void setMaxDate(final LocalDateTime maxDate)
+	private void setMaxDate(final Date maxDate)
 	{
-		if (this.maxDate != null && this.maxDate.isAfter(maxDate))
+		if (this.maxDate != null && this.maxDate.after(maxDate))
 		{
 			return;
 		}
@@ -95,7 +95,7 @@ public abstract class Index
 	/**
 	 * @return the minDate
 	 */
-	public LocalDateTime getMinDate()
+	public Date getMinDate()
 	{
 		return minDate;
 	}
@@ -103,7 +103,7 @@ public abstract class Index
 	/**
 	 * @return the maxDate
 	 */
-	public LocalDateTime getMaxDate()
+	public Date getMaxDate()
 	{
 		return maxDate;
 	}

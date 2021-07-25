@@ -46,7 +46,7 @@ public abstract class FilterPanel<T> extends JPanel
 
 	public abstract boolean isImplemented();
 
-	public Method getEventMethod(final Class<?> clazz)
+	public final Method getEventMethod(final Class<?> clazz)
 	{
 		for (Method method : clazz.getMethods())
 		{
@@ -59,7 +59,7 @@ public abstract class FilterPanel<T> extends JPanel
 		return null;
 	}
 
-	public final EventFilter<Event, T> getEventFilter()
+	public EventFilter<Event, T> getEventFilter()
 	{
 		Container parent = getParent().getParent();
 		if (getSelectedValues().isEmpty() || !(parent instanceof LogPanel))

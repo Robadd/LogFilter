@@ -1,11 +1,11 @@
 package de.robadd.logfilter.model;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 
 public class TimeSpan
 {
-	private LocalDateTime from;
-	private LocalDateTime to;
+	private Date from;
+	private Date to;
 
 	/**
 	 * TimeSpan
@@ -13,10 +13,15 @@ public class TimeSpan
 	 * @param from
 	 * @param to
 	 */
-	public TimeSpan(final LocalDateTime from, final LocalDateTime to)
+	public TimeSpan(final Date from, final Date to)
 	{
 		this.from = from;
 		this.to = to;
+	}
+
+	public boolean contains(final Date timestamp)
+	{
+		return !from.after(timestamp) && !to.before(timestamp);
 	}
 
 	/**
@@ -24,7 +29,7 @@ public class TimeSpan
 	 *
 	 * @return Calendar from
 	 */
-	public LocalDateTime getFrom()
+	public Date getFrom()
 	{
 		return from;
 	}
@@ -34,7 +39,7 @@ public class TimeSpan
 	 *
 	 * @param from Calendar
 	 */
-	public void setFrom(final LocalDateTime from)
+	public void setFrom(final Date from)
 	{
 		this.from = from;
 	}
@@ -44,7 +49,7 @@ public class TimeSpan
 	 *
 	 * @return Calendar to
 	 */
-	public LocalDateTime getTo()
+	public Date getTo()
 	{
 		return to;
 	}
@@ -54,7 +59,7 @@ public class TimeSpan
 	 *
 	 * @param to Calendar
 	 */
-	public void setTo(final LocalDateTime to)
+	public void setTo(final Date to)
 	{
 		this.to = to;
 	}

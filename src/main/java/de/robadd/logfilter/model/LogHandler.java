@@ -4,11 +4,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Locale;
+import java.util.Date;
 import java.util.function.Function;
 
 import org.xml.sax.Attributes;
@@ -99,8 +99,17 @@ public class LogHandler extends DefaultHandler
 			event.setLevel(LogLevel.getByValue(attributes.getValue("level")));
 			event.setThread(attributes.getValue("thread"));
 			event.setLogger(attributes.getValue("logger"));
-			event.setTimestamp(LocalDateTime.from(DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm:ss", Locale.GERMAN).parse(
-				attributes.getValue("timestamp"))));
+
+			Date date = null;
+			try
+			{
+				date = new SimpleDateFormat("dd.MM.yyyy H:mm:ss").parse(attributes.getValue("timestamp"));
+			}
+			catch (ParseException e)
+			{
+				e.printStackTrace();
+			}
+			event.setTimestamp(date);
 
 		}
 		else if ("locationInfo".equals(qName))

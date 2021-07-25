@@ -1,9 +1,8 @@
 package de.robadd.logfilter.model;
 
 import java.text.MessageFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import de.robadd.logfilter.FilterMethod;
 import de.robadd.logfilter.FilterMethodType;
@@ -16,7 +15,7 @@ import de.robadd.logfilter.ui.filter.ThreadFilterPanel;
 public class Event
 {
 	private String logger;
-	private LocalDateTime timestamp;
+	private Date timestamp;
 	private LogLevel level;
 	private String thread;
 	private String clazz;
@@ -30,7 +29,7 @@ public class Event
 	 * @return the timestamp
 	 */
 	@FilterMethod(DateFilterPanel.class)
-	public LocalDateTime getTimestamp()
+	public Date getTimestamp()
 	{
 		return timestamp;
 	}
@@ -81,7 +80,7 @@ public class Event
 	/**
 	 * @param timestamp the timestamp to set
 	 */
-	public void setTimestamp(final LocalDateTime timestamp)
+	public void setTimestamp(final Date timestamp)
 	{
 		this.timestamp = timestamp;
 	}
@@ -217,8 +216,7 @@ public class Event
 		return MessageFormat.format(
 			"<event logger=\"{0}\" timestamp=\"{1}\" level=\"{2}\" thread=\"{3}\" >\r\n<message><![CDATA[{4}]]>\r\n</message>"
 					+ "\r\n<throwable>{9}</throwable><locationInfo class=\"{5}\" method=\"{6}\" file=\"{7}\" line=\"{8}\"/>\r\n</event>",
-			getLogger(), DateTimeFormatter.ofPattern("dd.MM.yyyy H:mm:ss", Locale.GERMAN).format(getTimestamp()),
-			getLevel(), getThread(), getMessageContent().trim(), getClazz(), getMethod(), getFile(), getLine(),
-			getThrowable());
+			getLogger(), new SimpleDateFormat("dd.MM.yyyy H:mm:ss").format(getTimestamp()), getLevel(), getThread(),
+			getMessageContent().trim(), getClazz(), getMethod(), getFile(), getLine(), getThrowable());
 	}
 }

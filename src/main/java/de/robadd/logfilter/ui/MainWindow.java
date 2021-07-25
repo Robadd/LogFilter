@@ -60,7 +60,7 @@ public class MainWindow extends JFrame
 	 */
 	private void initialize()
 	{
-		setBounds(100, 100, 800, 800);
+		setBounds(100, 100, 800, 900);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setLayout(new FormLayout(new ColumnSpec[]
 		{ ColumnSpec.decode("784px:grow"), }, new RowSpec[]
