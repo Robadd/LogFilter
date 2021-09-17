@@ -1,0 +1,14 @@
+<event logger="OXID_API" timestamp="07.12.2020 0:08:00" level="INFO" thread="pool-75185-thread-2">
+<message><![CDATA[
+<?xml version='1.0' encoding='utf-8'?><soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/"><soapenv:Header/><soapenv:Body><ns1:OXERPLogin xmlns:ns1="OXERPService"><ns1:sUserName>erp</ns1:sUserName><ns1:sPassword>ahTh0ich&lt;u6A</ns1:sPassword><ns1:iShopID>1</ns1:iShopID><ns1:iLanguage>0</ns1:iLanguage></ns1:OXERPLogin></soapenv:Body></soapenv:Envelope>
+]]></message>
+<locationInfo class="com.speed4trade.web.soap.SoapMonitorHandler" method="invoke" file="SoapMonitorHandler.java" line="165"/>
+</event>
+
+<event logger="OXID_API" timestamp="07.12.2020 0:08:00" level="INFO" thread="pool-75185-thread-2">
+<message><![CDATA[https://www.waescheshoppy.de/modules/erp/oxerpservice.php?version=2.11.0
+<?xml version='1.0' encoding='utf-8'?><SOAP-ENV:Envelope xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ns1="OXERPService"><SOAP-ENV:Body><ns1:OXERPLoginResponse><ns1:OXERPLoginResult><ns1:blResult>true</ns1:blResult><ns1:sMessage>676hln1prs9gp4jv5o6s2d9s46</ns1:sMessage></ns1:OXERPLoginResult></ns1:OXERPLoginResponse></SOAP-ENV:Body></SOAP-ENV:Envelope>
+]]></message>
+<locationInfo class="com.speed4trade.web.soap.SoapMonitorHandler" method="invoke" file="SoapMonitorHandler.java" line="165"/>
+</event>
+
