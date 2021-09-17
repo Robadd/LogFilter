@@ -1,2 +1,3 @@
 rootProject.name = 'DevTools'
 include 'LogFilter'
+include 'Core'

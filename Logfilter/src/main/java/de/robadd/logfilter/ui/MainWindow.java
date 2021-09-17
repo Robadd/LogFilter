@@ -23,7 +23,7 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.RowSpec;
 
-import de.robadd.Plugin;
+import de.robadd.devtools.Plugin;
 import de.robadd.logfilter.InterfaceLoader;
 import de.robadd.logfilter.Translator;
 import de.robadd.logfilter.ui.tabs.LogPanel;
@@ -151,7 +151,7 @@ public class MainWindow extends JFrame implements Plugin
     /**
      * {@inheritDoc}
      *
-     * @see de.robadd.Plugin#getMainWindowFrame()
+     * @see de.robadd.devtools.Plugin#getMainWindowFrame()
      */
     @Override
     public JFrame getMainWindowFrame()

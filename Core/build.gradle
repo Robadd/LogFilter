@@ -5,6 +5,7 @@ version = '1.3.8'
 repositories {
     jcenter()
 }
+
 sourceSets {
     main {
         java {
@@ -31,35 +32,20 @@ java {
 }
 dependencies {
 	implementation group: 'com.jgoodies', name: 'jgoodies-forms', version: '1.9.0'
-	implementation project(':Core')
+	
     testImplementation 'org.testng:testng:7.2.0'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.19.0'
     testImplementation group: 'org.assertj', name: 'assertj-swing-junit', version: '3.17.1'
     
 }
 
-task release {
-    dependsOn build
-    doLast {
-        file("build/release/LogFilter-${version}.jar").renameTo(file("Z:/Postausgang/LogFilter-${version}.jar"));
-    }   
-}
-
 test {
     useTestNG()
 }
 
-task('buildAsPlugin', type: Jar) {
-    dependsOn classes
-    baseName jar.baseName
-    version jar.version
-    classifier = 'plugin'
-    from sourceSets.main.allJava
-}
-
 jar {
     manifest {
-        attributes "Main-Class": 'de.robadd.logfilter.Main'
+        attributes "Main-Class": 'de.robadd.devtools.Main'
     }
 
     from {
