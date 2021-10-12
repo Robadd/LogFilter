@@ -1,0 +1,8 @@
+plugins {
+    id 'base'
+}
+task clearRelease(type: Delete) {
+  delete 'release/'
+}
+
+clean.dependsOn clearRelease

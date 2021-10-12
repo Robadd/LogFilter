@@ -29,21 +29,22 @@ java {
 	sourceCompatibility = JavaVersion.VERSION_1_8
     targetCompatibility = JavaVersion.VERSION_1_8
 }
+
 dependencies {
 	implementation group: 'com.jgoodies', name: 'jgoodies-forms', version: '1.9.0'
 	implementation project(':Core')
-    testImplementation 'org.testng:testng:7.2.0'
+    testImplementation group: 'org.testng', name: 'testng', version: '7.4.0'
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.19.0'
     testImplementation group: 'org.assertj', name: 'assertj-swing-junit', version: '3.17.1'
     
 }
 
-task release {
-    dependsOn build
-    doLast {
-        file("build/release/LogFilter-${version}.jar").renameTo(file("Z:/Postausgang/LogFilter-${version}.jar"));
-    }   
+task copyJar(type: Copy) {
+    from jar
+    into '../release/plugins'
 }
+
+build.dependsOn copyJar
 
 test {
     useTestNG()

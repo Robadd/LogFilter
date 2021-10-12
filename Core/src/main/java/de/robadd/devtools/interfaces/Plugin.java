@@ -1,4 +1,4 @@
-package de.robadd.devtools;
+package de.robadd.devtools.interfaces;
 
 import javax.swing.JFrame;
 
@@ -13,5 +13,7 @@ import javax.swing.JFrame;
  */
 public interface Plugin
 {
-    public JFrame getMainWindowFrame();
+	public Class<? extends JFrame> getMainWindowFrameClass();
+
+	public String getPluginName();
 }

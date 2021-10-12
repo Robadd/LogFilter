@@ -14,21 +14,18 @@ public class HitmeisterLogConfiguration implements LogConfiguration
 	public void fillElement(final Event event, final String uri, final String localName, final String qName,
 			final Attributes attributes)
 	{
-		// TODO Auto-generated method stub
-
+//Not yet implemented
 	}
 
 	@Override
 	public EventBuilder getEventBuilder()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public IndexBuilder getIndexBuilder()
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 

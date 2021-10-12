@@ -16,9 +16,6 @@ import de.robadd.logfilter.model.Index;
 
 public class MessageFilterPanel extends FilterPanel<String>
 {
-	public MessageFilterPanel()
-	{
-	}
 
 	private static final long serialVersionUID = 5997233888313336477L;
 	private JTextField textField;

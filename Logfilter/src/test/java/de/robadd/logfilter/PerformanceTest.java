@@ -10,6 +10,7 @@ import java.util.Collections;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 
 import de.robadd.logfilter.logtypes.serverlog.ServerLogConfiguration;
@@ -20,9 +21,7 @@ public class PerformanceTest
 	@Test
 	public void performance() throws Exception
 	{
-		long start = System.currentTimeMillis();
-		// p(300000);
-		// Assertions.assertThat(System.currentTimeMillis() - start).isLessThan(3100);
+		p(300000);
 	}
 
 	private void p(final int i) throws Exception
@@ -37,6 +36,8 @@ public class PerformanceTest
 		final InputStream wellFormedXml = new SequenceInputStream(Collections.enumeration(Arrays.asList(new InputStream[]
 		{ new ByteArrayInputStream("<dummy>".getBytes()), new MultiplierFileStream(file, i), new ByteArrayInputStream(
 				"</dummy>".getBytes()), })));
+		long start = System.currentTimeMillis();
 		parser.parse(wellFormedXml, serverLogIndexer);
+		Assertions.assertThat(System.currentTimeMillis() - start).isLessThan(3100);
 	}
 }

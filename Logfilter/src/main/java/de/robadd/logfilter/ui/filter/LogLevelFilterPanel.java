@@ -19,10 +19,6 @@ import de.robadd.logfilter.model.LogLevel;
 
 public class LogLevelFilterPanel extends FilterPanel<LogLevel>
 {
-	public LogLevelFilterPanel()
-	{
-	}
-
 	private List<LogLevel> values = new ArrayList<>();
 	private JList<LogLevel> list;
 
