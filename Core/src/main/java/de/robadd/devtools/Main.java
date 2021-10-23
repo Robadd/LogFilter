@@ -22,7 +22,7 @@ class Main
 
 	public static void main(final String[] args) throws Exception
 	{
-		List<Class<? extends Plugin>> plugins = PluginLoader.getInstance().getPlugins();
+		List<Plugin> plugins = PluginLoader.getInstance().getPlugins();
 		try
 		{
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -32,21 +32,13 @@ class Main
 		{
 			e.printStackTrace();
 		}
+
 		EventQueue.invokeLater(() ->
 		{
 			try
 			{
-				plugins.forEach(a ->
-				{
-					try
-					{
-						a.getDeclaredConstructor(Boolean.class).newInstance(true);
-					}
-					catch (Exception e)
-					{
-						e.printStackTrace();
-					}
-				});
+				MainWindow mainWindow = new MainWindow();
+				plugins.forEach(mainWindow::addPlugin);
 			}
 			catch (Exception e)
 			{

@@ -18,8 +18,9 @@ class PluginLoader
 	{
 	}
 
-	public List<Class<? extends Plugin>> getPlugins()
+	public List<Plugin> getPlugins()
 	{
+		new de.robadd.logfilter.ui.MainWindow();
 		return new ArrayList<>();
 	}
 }
