@@ -9,4 +9,7 @@
 
 rootProject.name = 'LogFilter'
 
+project(':Core').projectDir = file('../Core')
+
 include project(':Core')
+

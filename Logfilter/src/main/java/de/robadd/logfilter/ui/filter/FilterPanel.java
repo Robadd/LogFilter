@@ -67,7 +67,7 @@ public abstract class FilterPanel<T> extends JPanel
 			return EventFilter.getTrueTester();
 		}
 		LogPanel castParent = (LogPanel) parent;
-		Method eventMethod = getEventMethod(castParent.getLogConfiguration().getEventBuilder().build().getClass());
+		Method eventMethod = getEventMethod(castParent.getLogConfiguration().getEventFactory().build().getClass());
 		if (eventMethod == null)
 		{
 			return EventFilter.getTrueTester();

@@ -184,6 +184,7 @@ public class Event
 
 	public void messageCharacter(final char[] ch, final int start, final int length)
 	{
+
 		if (message != null)
 		{
 			String str = String.valueOf(ch, start, length);

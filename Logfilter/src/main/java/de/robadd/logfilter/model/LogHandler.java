@@ -4,11 +4,8 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.function.Function;
 
 import org.xml.sax.Attributes;
@@ -20,11 +17,10 @@ import de.robadd.logfilter.logtypes.LogConfiguration;
 
 public class LogHandler extends DefaultHandler
 {
-	private final EventBuilder eventBuilder;
-	private final LogConfiguration config;
+	private final LogConfiguration<?> config;
 	private Type type;
 	private Index index;
-	private Event event;
+
 	private String elementName;
 	private BufferedWriter bw;
 	private Collection<EventFilter<Event, ?>> filters = new ArrayList<>();
@@ -33,6 +29,7 @@ public class LogHandler extends DefaultHandler
 	private Integer totalEventCount = 0;
 	private File outputFile;
 	private Function<Integer, Void> progressDisplay;
+	private EventBuilder<?> eventBuilder;
 
 	public enum Type
 	{
@@ -58,9 +55,8 @@ public class LogHandler extends DefaultHandler
 		this.outputFile = out;
 	}
 
-	public LogHandler(final LogConfiguration argConfig)
+	public LogHandler(final LogConfiguration<?> argConfig)
 	{
-		eventBuilder = argConfig.getEventBuilder();
 		config = argConfig;
 	}
 
@@ -69,6 +65,7 @@ public class LogHandler extends DefaultHandler
 	{
 		totalEventCount = 0;
 		handledEventCount = 0;
+		eventBuilder = config.getEventBuilder();
 		if (Type.READING.equals(type))
 		{
 			index = config.getIndexBuilder().build();
@@ -91,55 +88,30 @@ public class LogHandler extends DefaultHandler
 	public void startElement(final String uri, final String localName, final String qName, final Attributes attributes)
 			throws SAXException
 	{
-
 		elementName = qName;
+
 		if (isEventElement())
 		{
-			event = eventBuilder.build();
-			event.setLevel(LogLevel.getByValue(attributes.getValue("level")));
-			event.setThread(attributes.getValue("thread"));
-			event.setLogger(attributes.getValue("logger"));
-
-			Date date = null;
-			try
-			{
-				date = new SimpleDateFormat("dd.MM.yyyy H:mm:ss").parse(attributes.getValue("timestamp"));
-			}
-			catch (ParseException e)
-			{
-				e.printStackTrace();
-			}
-			event.setTimestamp(date);
-
+			eventBuilder = config.getEventBuilder();
+			eventBuilder.fillEvent(attributes);
 		}
 		else if ("locationInfo".equals(qName))
 		{
-			event.setClazz(attributes.getValue("class"));
-			event.setMethod(attributes.getValue("method"));
-			event.setFile(attributes.getValue("file"));
-			try
-			{
-				event.setLine(Integer.valueOf(attributes.getValue("line").replace(".", "")));
-			}
-			catch (NumberFormatException e)
-			{
-				e.printStackTrace();
-			}
+			eventBuilder.fillLocationInfo(attributes);
 		}
-		config.fillElement(event, uri, localName, qName, attributes);
+		eventBuilder.fillElement(uri, localName, qName, attributes);
 	}
 
 	@Override
 	public void characters(final char[] ch, final int start, final int length) throws SAXException
 	{
-		if (isMessageElement() && event != null)
+		if (isMessageElement())
 		{
-			event.messageCharacter(ch, start, length);
-
+			eventBuilder.messageCharacters(ch, start, length);
 		}
-		else if ("throwable".equals(elementName) && length > 1 && event != null)
+		else if ("throwable".equals(elementName))
 		{
-			event.setThrowable(new String(ch, start, length));
+			eventBuilder.throwableCharacters(ch, start, length);
 		}
 	}
 
@@ -150,13 +122,14 @@ public class LogHandler extends DefaultHandler
 		{
 			if (Type.READING.equals(type))
 			{
-				index.addEvent(event);
+				eventBuilder.addToIndex(index);
 			}
 			else if (Type.WRITING.equals(type))
 			{
 				try
 				{
-					writeToStream(event);
+					Event event2 = eventBuilder.getEvent();
+					writeToStream(event2);
 				}
 				catch (IOException e)
 				{
@@ -168,7 +141,7 @@ public class LogHandler extends DefaultHandler
 			{
 				progressDisplay.apply(handledEventCount);
 			}
-			event = null;
+			eventBuilder = null;
 		}
 	}
 

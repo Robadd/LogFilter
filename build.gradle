@@ -1,6 +1,7 @@
-plugins {
-    id 'base'
-}
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'base'
+
 task clearRelease(type: Delete) {
   delete 'release/'
 }

@@ -7,20 +7,20 @@ import de.robadd.devtools.interfaces.Plugin;
 
 class PluginLoader
 {
-	private static final PluginLoader INSTANCE = new PluginLoader();
+    private static final PluginLoader INSTANCE = new PluginLoader();
 
-	public static PluginLoader getInstance()
-	{
-		return INSTANCE;
-	}
+    public static PluginLoader getInstance()
+    {
+        return INSTANCE;
+    }
 
-	private PluginLoader()
-	{
-	}
+    private PluginLoader()
+    {
+    }
 
-	public List<Plugin> getPlugins()
-	{
-		new de.robadd.logfilter.ui.MainWindow();
-		return new ArrayList<>();
-	}
+    public List<Plugin> getPlugins()
+    {
+        // new de.robadd.logfilter.ui.MainWindow();
+        return new ArrayList<>();
+    }
 }

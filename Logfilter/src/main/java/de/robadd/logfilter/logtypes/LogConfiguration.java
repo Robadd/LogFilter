@@ -1,17 +1,17 @@
 package de.robadd.logfilter.logtypes;
 
-import org.xml.sax.Attributes;
-
 import de.robadd.logfilter.model.Event;
 import de.robadd.logfilter.model.EventBuilder;
+import de.robadd.logfilter.model.EventFactory;
 import de.robadd.logfilter.model.IndexBuilder;
 
-public interface LogConfiguration
+public interface LogConfiguration<T extends Event>
 {
-	public void fillElement(final Event event, final String uri, final String localName, final String qName,
-			final Attributes attributes);
+    public EventFactory<T> getEventFactory();
 
-	public EventBuilder getEventBuilder();
+    public EventBuilder<T> getEventBuilder();
 
-	public IndexBuilder getIndexBuilder();
+    public IndexBuilder getIndexBuilder();
+
+    ProcessingType getProcessingType();
 }
